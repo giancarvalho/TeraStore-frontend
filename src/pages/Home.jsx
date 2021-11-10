@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import PageContainer from '../components/containers/PageContainer';
 import Footer from '../components/Footer';
 import ContentContainer from '../components/containers/ContentContainer';
+import ProductsGrid from '../components/ProductsGrid/ProductsGrid';
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
             alt="gpu"
           />
         </BannerContainer>
+        <ProductsGrid />
       </ContentContainer>
       <Footer />
     </PageContainer>
@@ -25,6 +27,7 @@ export default function Home() {
 const BannerContainer = styled.div`
   width: 100%;
   height: 250px;
+  margin-bottom: 50px;
 `;
 
 const Banner = styled.img`

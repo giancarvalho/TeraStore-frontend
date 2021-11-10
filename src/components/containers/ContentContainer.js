@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const ContentContainer = styled.div`
   width: 100%;
-  min-height: 80vh;
+  min-height: 100vh;
   background-color: #141414;
 `;
 
