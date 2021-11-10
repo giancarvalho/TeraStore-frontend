@@ -2,12 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 import CheckoutTable from './elements/CheckoutTable';
+import StyledButton from './elements/StyledButton';
 
 export default function Pages() {
   return (
     <Wrapper>
       <MockedHeader />
       <CheckoutTable />
+      <StyledButton color="#0087D4">Go to checkout</StyledButton>
+      <StyledButton>Confirm order</StyledButton>
     </Wrapper>
   );
 }

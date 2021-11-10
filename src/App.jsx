@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 
-import Checkout from './pages/Checkout';
+import Checkout from './pages/Checkout/Checkout';
 
 export default function App() {
   return (
