@@ -25,7 +25,7 @@ export default function CheckoutTable() {
       },
     },
     {
-      amount: 1,
+      amount: 3,
       details: {
         id: 3,
         name: 'Mouse Razer Basilisk RGB',
@@ -93,6 +93,7 @@ const StyledTable = styled.table`
   font-family: Roboto;
   font-size: 24px;
   font-weight: 400;
+  color: #fff;
 
   img {
     width: 48px;
@@ -112,19 +113,22 @@ const StyledTable = styled.table`
     width: calc(100% - 450px);
     padding-left: 64px;
     justify-content: left;
+    border: none;
   }
 
   td:first-child {
     width: calc(100% - 450px);
     justify-content: left;
+    border: none;
   }
 
   td {
     width: 150px;
-    margin: 4px 0px;
+    padding: 4px 0px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-left: solid 1px #fff;
   }
 
   th {
@@ -133,11 +137,17 @@ const StyledTable = styled.table`
     align-items: center;
     justify-content: center;
     font-weight: 700;
+    border-left: solid 1px #fff;
+  }
+
+  tbody {
+    padding-bottom: 8px;
+    border-bottom: solid 1px #fff;
   }
 
   tfoot tr {
     width: 240px;
-    margin-top: 16px;
+    margin-top: 8px;
     margin-left: calc(100% - 240px);
     font-weight: 700;
   }
