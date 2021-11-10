@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { BsCartPlus, BsCartCheck } from 'react-icons/bs';
+import { CSSTransition } from 'react-transition-group';
 
 export default function ProductCard({ productData }) {
   const [addItemToCart, setAddItemToCart] = useState(false);
@@ -23,10 +24,20 @@ export default function ProductCard({ productData }) {
       </DetailsContainer>
       <ButtonsContainer>
         <BuyButton>Buy</BuyButton>
-        <CartButton onClick={() => addToCart()} clicked={addItemToCart}>
-          {addItemToCart ? <BsCartCheck /> : <BsCartPlus />}
 
-          {addItemToCart && <p> ({nItemsInCart})</p>}
+        <CartButton onClick={() => addToCart()} clicked={addItemToCart}>
+          <CSSTransition
+            in={nItemsInCart}
+            timeout={200}
+            classNames="icon"
+            key={productData.name}
+          >
+            <>
+              {addItemToCart ? <BsCartCheck /> : <BsCartPlus />}
+
+              {addItemToCart && <p> ({nItemsInCart})</p>}
+            </>
+          </CSSTransition>
         </CartButton>
       </ButtonsContainer>
     </ProductContainer>
@@ -86,12 +97,30 @@ const BuyButton = styled.button`
 
 const CartButton = styled.button`
   width: 45%;
-  background-color: ${({ clicked }) => (clicked ? '#89d800' : '#0087d4')};
+  background: linear-gradient(to right, #0087d4 50%, #00d9ff 50%) left;
+  background-size: 200%;
+  background-position: ${({ clicked }) => (clicked ? 'right' : 'left')};
+  transition: 0.2s ease-out;
   border-radius: 0 0 4px 0;
   font-size: 22px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .icon-enter {
+    opacity: 0;
+  }
+  .icon-exit {
+    opacity: 1;
+  }
+  .icon-exit-active {
+    opacity: 0;
+    transition: opacity 200ms ease-in;
+  }
+  .icon-enter-active {
+    opacity: 1;
+    transition: opacity 200ms ease-in;
+  }
 
   p {
     font-size: 12px;
