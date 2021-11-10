@@ -14,7 +14,7 @@ export default function Home() {
   useEffect(() => {
     getLastProducts()
       .then((response) => setProductsList(response.data))
-      .catch((error) => console.log(error.response?.data));
+      .catch(() => window.location.reload());
   }, []);
 
   return (

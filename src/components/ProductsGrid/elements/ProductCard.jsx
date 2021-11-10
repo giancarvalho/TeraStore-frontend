@@ -36,7 +36,7 @@ export default function ProductCard({ productData }) {
 
         <CartButton onClick={() => addToCart()} clicked={addItemToCart}>
           <CSSTransition
-            in={nItemsInCart}
+            in={addItemToCart}
             timeout={200}
             classNames="icon"
             key={productData.name}
