@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Header from '../components/Header';
+import Header from '../components/header/Header';
 import PageContainer from '../components/containers/PageContainer';
-import Footer from '../components/Footer';
+import Footer from '../components/footer/Footer';
 import ContentContainer from '../components/containers/ContentContainer';
 import ProductsGrid from '../components/ProductsGrid/ProductsGrid';
 import { getLastProducts } from '../services/services';
