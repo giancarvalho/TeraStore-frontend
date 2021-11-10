@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { BsCartPlus, BsCartCheck } from 'react-icons/bs';
 import { CSSTransition } from 'react-transition-group';
+
 import {
   ProductContainer,
   CartButton,

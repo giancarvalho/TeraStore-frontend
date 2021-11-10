@@ -6,6 +6,7 @@ import Footer from '../components/footer/Footer';
 import ContentContainer from '../components/containers/ContentContainer';
 import ProductsGrid from '../components/ProductsGrid/ProductsGrid';
 import { getLastProducts } from '../services/services';
+import gpu from '../assets/images/gpu.jpg';
 
 export default function Home() {
   const [productsList, setProductsList] = useState([]);
@@ -21,10 +22,7 @@ export default function Home() {
       <Header />
       <ContentContainer>
         <BannerContainer>
-          <Banner
-            src="https://www.zotac.com/download/files/styles/w1920/public/news/images/vga_2070_1280x500_edit.jpg?itok=obf3FFT0"
-            alt="gpu"
-          />
+          <Banner src={gpu} alt="gpu" />
         </BannerContainer>
         <ProductsGrid productsList={productsList} />
       </ContentContainer>
