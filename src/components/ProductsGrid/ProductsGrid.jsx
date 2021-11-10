@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ProductCard from './elements/ProductCard';
 
 export default function ProductsGrid({ productsList }) {
+  // pass an array with products
   return (
     <GridContainer>
       <h1>New Releases</h1>
