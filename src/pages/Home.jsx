@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import PageContainer from '../components/containers/PageContainer';
 import Footer from '../components/Footer';
 import ContentContainer from '../components/containers/ContentContainer';
 import ProductsGrid from '../components/ProductsGrid/ProductsGrid';
+import { getLastProducts } from '../services/services';
 
 export default function Home() {
+  const [productsList, setProductsList] = useState([]);
+  console.log(productsList);
+  useEffect(() => {
+    getLastProducts()
+      .then((response) => setProductsList(response.data))
+      .catch((error) => console.log(error.response?.data));
+  }, []);
+
   return (
     <PageContainer>
       <Header />
@@ -17,7 +26,7 @@ export default function Home() {
             alt="gpu"
           />
         </BannerContainer>
-        <ProductsGrid />
+        <ProductsGrid productsList={productsList} />
       </ContentContainer>
       <Footer />
     </PageContainer>
