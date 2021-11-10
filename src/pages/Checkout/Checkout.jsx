@@ -3,14 +3,15 @@ import styled from 'styled-components';
 
 import CheckoutTable from './elements/CheckoutTable';
 import StyledButton from './elements/StyledButton';
+import CheckoutForm from './elements/CheckoutForm';
 
 export default function Pages() {
   return (
     <Wrapper>
       <MockedHeader />
       <CheckoutTable />
-      <StyledButton color="#0087D4">Go to checkout</StyledButton>
-      <StyledButton>Confirm order</StyledButton>
+      <StyledButton color="#0087D4" isButtonEnabled>Go to checkout</StyledButton>
+      <CheckoutForm />
     </Wrapper>
   );
 }
