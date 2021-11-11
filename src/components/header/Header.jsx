@@ -9,7 +9,7 @@ import TeraStore from '../logo/Logo';
 import ActionButton from '../buttons/ActionButton';
 
 export default function Header() {
-  const [isSignedIn] = useState(false);
+  const [isSignedIn] = useState(true);
   const [openMenu, setOpenMenu] = useState(false);
   const history = useHistory();
 
@@ -52,7 +52,7 @@ export default function Header() {
           >
             <UserMenuContainer>
               <MenuOptions>
-                <Option onClick={(e) => signOut(e)}>Sign out</Option>
+                <Option onClick={(e) => signOut(e)} role="button" tabindex="-1">Sign out</Option>
               </MenuOptions>
             </UserMenuContainer>
           </CSSTransition>
@@ -78,6 +78,11 @@ const HeaderContainer = styled.header`
   top: 0;
   left: 0;
   right: 0;
+
+
+  @media(max-width: 600px){
+    padding: 0 5px;
+  }
 `;
 
 const LeftContainer = styled.div`
@@ -88,6 +93,13 @@ const LeftContainer = styled.div`
 
 const MenuButton = styled(ActionButton)`
   margin: 0 10px;
+
+  @media(max-width: 600px){
+
+    min-height: 30px;
+    min-width: auto;
+    font-size: 16px;
+  }
 `;
 
 const RightContainer = styled.div`
@@ -128,11 +140,25 @@ const LoginButton = styled(ActionButton)`
     font-size: 14px;
     margin-left: 10px;
   }
+
+  @media(max-width: 600px){
+   margin-right: 0;
+  }
 `;
 
 const CartButton = styled(ActionButton)`
   width: 50px;
   position: relative;
+
+  @media(max-width: 600px){
+    position: fixed;
+    bottom: 30px;
+    right: 15px;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    font-size: 50px;
+  }
 `;
 
 const ItemCounter = styled.div`
@@ -149,6 +175,11 @@ const ItemCounter = styled.div`
   background-color: #29aaf4;
   color: #000;
   border-radius: 50%;
+
+  @media(max-width: 600px){
+    height: 30px;
+    width: 30px;
+  }
 `;
 
 const UserMenuContainer = styled.div`
@@ -166,7 +197,7 @@ const MenuOptions = styled.div`
   padding: 10px 0;
 `;
 
-const Option = styled.button`
+const Option = styled.div`
   background-color: transparent;
   border: none;
   color: #fff;

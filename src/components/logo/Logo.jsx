@@ -15,6 +15,6 @@ const LogoContainer = styled.h1`
   color: ${({ color }) => color || 'inherit'};
 
   @media (max-width: 600px) {
-    font-size: 30px;
+    font-size: 25px;
   }
 `;
