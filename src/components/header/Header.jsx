@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { FaUserCircle } from 'react-icons/fa';
@@ -7,6 +9,20 @@ import TeraStore from '../logo/Logo';
 import ActionButton from '../buttons/ActionButton';
 
 export default function Header() {
+  const [isSignedIn] = useState(true);
+  const [openMenu, setOpenMenu] = useState(false);
+  const user = true;
+  const history = useHistory();
+
+  function menuOrLoginPage() {
+    if (user) {
+      setOpenMenu(!openMenu);
+      return;
+    }
+
+    history.push('/nothing');
+  }
+
   return (
     <HeaderContainer>
       <LeftContainer>
@@ -16,8 +32,22 @@ export default function Header() {
         <TeraStore />
       </LeftContainer>
       <RightContainer>
-        <LoginButton fontSize="40px">
+        <LoginButton
+          fontSize="40px"
+          isSignedIn={isSignedIn}
+          onClick={() => menuOrLoginPage()}
+        >
           <FaUserCircle />
+          {isSignedIn && <p>Hi, user</p>}
+          <CSSTransition
+            key="32165"
+            inProp={openMenu}
+            timeout={150}
+            unmountOnExit
+            classNames="showUserMenu"
+          >
+            <UserMenuContainer>Teste</UserMenuContainer>
+          </CSSTransition>
         </LoginButton>
         <CartButton fontSize="35px">
           <CgShoppingCart />
@@ -35,6 +65,11 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
 `;
 
 const LeftContainer = styled.div`
@@ -48,10 +83,18 @@ const MenuButton = styled(ActionButton)`
 `;
 
 const RightContainer = styled.div`
-  width: 150px;
   display: flex;
   align-items: center;
   justify-content: space-around;
+
+  .showUserMenu-enter {
+    bottom: 50px;
+  }
+  
+  .showUserMenu-active {
+    bottom: -30px;
+    transition: bottom 150ms ease-in;
+  }
 `;
 
 const LoginButton = styled(ActionButton)`
@@ -59,7 +102,15 @@ const LoginButton = styled(ActionButton)`
   width: auto;
   color: #fff;
   background-color: transparent;
-  border-radius: 50%;
+  margin-right: 20px;
+  position: relative;
+
+  border: ${({ isSignedIn }) => (isSignedIn ? '1px solid rgba(255 ,255 ,255, 0.1)' : 'none')};
+
+  p {
+    font-size: 14px;
+    margin-left: 10px;
+  }
 `;
 
 const CartButton = styled(ActionButton)`
@@ -81,4 +132,15 @@ const ItemCounter = styled.div`
   background-color: #29aaf4;
   color: #000;
   border-radius: 50%;
+`;
+
+const UserMenuContainer = styled.div`
+  background-color: #141414;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  left: 0;
+  font-size: 14px;
+  border-radius: 0 0 4px 4px;
+  transition: bottom 150ms ease-in-out;
 `;

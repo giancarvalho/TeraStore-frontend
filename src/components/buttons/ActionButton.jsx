@@ -1,9 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function ActionButton({ children, fontSize, className }) {
+export default function ActionButton({
+  children,
+  fontSize,
+  className,
+  ...otherProps
+}) {
   return (
-    <Button className={className} fontSize={fontSize}>
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <Button className={className} fontSize={fontSize} {...otherProps}>
       {children}
     </Button>
   );
@@ -21,7 +27,5 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
 
-  :hover {
-    filter: brightness(1.25);
-  }
+
 `;
