@@ -16,7 +16,7 @@ export default function ProductsGrid({ productsList }) {
   );
 }
 
-const GridContainer = styled.div`
+const GridContainer = styled.main`
   width: 70%;
   margin: 0 auto;
 

@@ -58,7 +58,7 @@ export default function Header() {
   );
 }
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.header`
   height: 60px;
   background-color: #000;
   display: flex;

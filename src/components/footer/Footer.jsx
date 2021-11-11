@@ -15,7 +15,7 @@ export default function Footer() {
   );
 }
 
-const FooterContainer = styled.div`
+const FooterContainer = styled.footer`
   width: 100%;
   background-color: #000;
   display: flex;

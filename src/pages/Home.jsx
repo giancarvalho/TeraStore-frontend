@@ -14,7 +14,9 @@ export default function Home() {
   useEffect(() => {
     getLastProducts()
       .then((response) => setProductsList(response.data))
-      .catch(() => window.location.reload());
+      .catch(() => {
+        setTimeout(window.location.reload(), 15000);
+      });
   }, []);
 
   return (
