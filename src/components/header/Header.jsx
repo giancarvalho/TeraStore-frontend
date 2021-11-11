@@ -9,18 +9,23 @@ import TeraStore from '../logo/Logo';
 import ActionButton from '../buttons/ActionButton';
 
 export default function Header() {
-  const [isSignedIn] = useState(true);
+  const [isSignedIn] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
-  const user = true;
   const history = useHistory();
 
   function menuOrLoginPage() {
-    if (user) {
+    if (isSignedIn) {
       setOpenMenu(!openMenu);
       return;
     }
 
-    history.push('/nothing');
+    history.push('/sign-in');
+  }
+
+  function signOut(e) {
+    e.stopPropagation();
+    // call signout function bellow
+    console.log('signed out');
   }
 
   return (
@@ -40,13 +45,17 @@ export default function Header() {
           <FaUserCircle />
           {isSignedIn && <p>Hi, user</p>}
           <CSSTransition
-            key="32165"
-            inProp={openMenu}
+            key="key"
+            in={openMenu}
             timeout={150}
+            classNames="usermenu"
             unmountOnExit
-            classNames="showUserMenu"
           >
-            <UserMenuContainer>Teste</UserMenuContainer>
+            <UserMenuContainer>
+              <MenuOptions>
+                <Option onClick={(e) => signOut(e)}>Sign out</Option>
+              </MenuOptions>
+            </UserMenuContainer>
           </CSSTransition>
         </LoginButton>
         <CartButton fontSize="35px">
@@ -86,14 +95,22 @@ const RightContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
+  position: relative;
+  background-color: #000;
 
-  .showUserMenu-enter {
-    bottom: 50px;
+  .usermenu-enter {
+    bottom: 0;
   }
-  
-  .showUserMenu-active {
-    bottom: -30px;
-    transition: bottom 150ms ease-in;
+  .usermenu-enter-active {
+    bottom: -40px;
+    transition: bottom 200ms;
+  }
+  .usermenu-exit {
+    bottom: -40px;
+  }
+  .usermenu-exit-active {
+    bottom: 0;
+    transition: bottom 200ms;
   }
 `;
 
@@ -104,6 +121,7 @@ const LoginButton = styled(ActionButton)`
   background-color: transparent;
   margin-right: 20px;
   position: relative;
+  background-color: #000;
 
   border: ${({ isSignedIn }) => (isSignedIn ? '1px solid rgba(255 ,255 ,255, 0.1)' : 'none')};
 
@@ -135,12 +153,25 @@ const ItemCounter = styled.div`
 `;
 
 const UserMenuContainer = styled.div`
+  z-index: -1;
   background-color: #141414;
-  height: 30px;
+  bottom: -35px;
   position: absolute;
   right: 0;
   left: 0;
   font-size: 14px;
   border-radius: 0 0 4px 4px;
-  transition: bottom 150ms ease-in-out;
+`;
+
+const MenuOptions = styled.div`
+  padding: 10px 0;
+`;
+
+const Option = styled.button`
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  width: 100%;
 `;
