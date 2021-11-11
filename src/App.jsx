@@ -8,18 +8,22 @@ import saveCartToStorage from './utils/cart/saveCartToStorage';
 import getCartFromStorage from './utils/cart/getCartFromStorage';
 
 function App() {
-  const [cart, setCart] = useState(getCartFromStorage());
+  const storedCart = getCartFromStorage();
+  const [cart, setCart] = useState(storedCart);
+
+  function saveNewList(newCartList) {
+    saveCartToStorage(newCartList);
+    setCart([...newCartList]);
+  }
 
   function deleteFromCart(itemId) {
     const newCartList = cart.items.filter((item) => item !== itemId);
-
-    setCart(newCartList);
+    saveNewList(newCartList);
   }
 
   function addToCart(itemId) {
     const newCartList = [...cart, itemId];
-    saveCartToStorage(newCartList);
-    setCart([...newCartList]);
+    saveNewList(newCartList);
   }
 
   return (

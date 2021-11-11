@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useContext, useState } from 'react';
 import { BsCartPlus, BsCartCheck } from 'react-icons/bs';
+import { useHistory } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import CartContext from '../../../contexts/CartContext';
 
@@ -16,13 +17,19 @@ import {
 
 export default function ProductCard({ productData }) {
   const { addToCart } = useContext(CartContext);
-  const [addItemToCart, setAddItemToCart] = useState(false);
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
   const [nItemsInCart, setnItemsInCart] = useState(0);
+  const history = useHistory();
 
   function addItem() {
     addToCart(productData.id);
-    setAddItemToCart(true);
+    setIsAddBtnClicked(true);
     setnItemsInCart(() => nItemsInCart + 1);
+  }
+
+  function buyItem() {
+    addToCart(productData.id);
+    history.push('/checkout');
   }
   return (
     <ProductContainer>
@@ -35,19 +42,19 @@ export default function ProductCard({ productData }) {
         </Price>
       </DetailsContainer>
       <ButtonsContainer>
-        <BuyButton>Buy</BuyButton>
+        <BuyButton onClick={() => buyItem()}>Buy</BuyButton>
 
-        <CartButton onClick={() => addItem()} clicked={addItemToCart}>
+        <CartButton onClick={() => addItem()} clicked={isAddBtnClicked}>
           <CSSTransition
-            in={addItemToCart}
+            in={isAddBtnClicked}
             timeout={200}
             classNames="icon"
             key={productData.name}
           >
             <>
-              {addItemToCart ? <BsCartCheck /> : <BsCartPlus />}
+              {isAddBtnClicked ? <BsCartCheck /> : <BsCartPlus />}
 
-              {addItemToCart && <p> ({nItemsInCart})</p>}
+              {isAddBtnClicked && <p> ({nItemsInCart})</p>}
             </>
           </CSSTransition>
         </CartButton>
