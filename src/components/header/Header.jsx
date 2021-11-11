@@ -25,7 +25,6 @@ export default function Header() {
   function signOut(e) {
     e.stopPropagation();
     // call signout function bellow
-    console.log('signed out');
   }
 
   return (
