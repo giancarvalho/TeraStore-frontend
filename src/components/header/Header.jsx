@@ -4,9 +4,9 @@ import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { FaUserCircle } from 'react-icons/fa';
-import { CgShoppingCart } from 'react-icons/cg';
 import TeraStore from '../logo/Logo';
 import ActionButton from '../buttons/ActionButton';
+import Cart from '../cart/Cart';
 
 export default function Header() {
   const [isSignedIn] = useState(true);
@@ -52,15 +52,14 @@ export default function Header() {
           >
             <UserMenuContainer>
               <MenuOptions>
-                <Option onClick={(e) => signOut(e)} role="button" tabindex="-1">Sign out</Option>
+                <Option onClick={(e) => signOut(e)} role="button" tabindex="-1">
+                  Sign out
+                </Option>
               </MenuOptions>
             </UserMenuContainer>
           </CSSTransition>
         </LoginButton>
-        <CartButton fontSize="35px">
-          <CgShoppingCart />
-          <ItemCounter>3</ItemCounter>
-        </CartButton>
+        <Cart />
       </RightContainer>
     </HeaderContainer>
   );
@@ -79,8 +78,7 @@ const HeaderContainer = styled.header`
   left: 0;
   right: 0;
 
-
-  @media(max-width: 600px){
+  @media (max-width: 600px) {
     padding: 0 5px;
   }
 `;
@@ -94,8 +92,7 @@ const LeftContainer = styled.div`
 const MenuButton = styled(ActionButton)`
   margin: 0 10px;
 
-  @media(max-width: 600px){
-
+  @media (max-width: 600px) {
     min-height: 30px;
     min-width: auto;
     font-size: 16px;
@@ -141,44 +138,8 @@ const LoginButton = styled(ActionButton)`
     margin-left: 10px;
   }
 
-  @media(max-width: 600px){
-   margin-right: 0;
-  }
-`;
-
-const CartButton = styled(ActionButton)`
-  width: 50px;
-  position: relative;
-
-  @media(max-width: 600px){
-    position: fixed;
-    bottom: 30px;
-    right: 15px;
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    font-size: 50px;
-  }
-`;
-
-const ItemCounter = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 20px;
-  width: 20px;
-  font-weight: bold;
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  font-size: 16px;
-  background-color: #29aaf4;
-  color: #000;
-  border-radius: 50%;
-
-  @media(max-width: 600px){
-    height: 30px;
-    width: 30px;
+  @media (max-width: 600px) {
+    margin-right: 0;
   }
 `;
 
