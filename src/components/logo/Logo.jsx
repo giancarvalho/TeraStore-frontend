@@ -10,6 +10,7 @@ export default function TeraStore({ color, fontSize }) {
   );
 }
 const LogoContainer = styled.h1`
+  display: inline;
   font-family: 'Black Ops One', cursive;
   font-size: ${({ fontSize }) => fontSize || '42px'};
   color: ${({ color }) => color || 'inherit'};

@@ -7,15 +7,17 @@ import { FaUserCircle } from 'react-icons/fa';
 import TeraStore from '../logo/Logo';
 import ActionButton from '../buttons/ActionButton';
 import Cart from '../cart/Cart';
+import SideMenu from '../sidemenu/SideMenu';
 
 export default function Header() {
   const [isSignedIn] = useState(true);
-  const [openMenu, setOpenMenu] = useState(false);
+  const [openUserMenu, setOpenUserMenu] = useState(false);
+  const [openSideMenu, setOpenSideMenu] = useState(false);
   const history = useHistory();
 
   function menuOrLoginPage() {
     if (isSignedIn) {
-      setOpenMenu(!openMenu);
+      setOpenUserMenu(!openUserMenu);
       return;
     }
 
@@ -30,7 +32,7 @@ export default function Header() {
   return (
     <HeaderContainer>
       <LeftContainer>
-        <MenuButton>
+        <MenuButton onClick={() => setOpenSideMenu(!openSideMenu)}>
           <AiOutlineMenu />
         </MenuButton>
         <TeraStore />
@@ -45,7 +47,7 @@ export default function Header() {
           {isSignedIn && <p>Hi, user</p>}
           <CSSTransition
             key="key"
-            in={openMenu}
+            in={openUserMenu}
             timeout={150}
             classNames="usermenu"
             unmountOnExit
@@ -61,6 +63,7 @@ export default function Header() {
         </LoginButton>
         <Cart />
       </RightContainer>
+      {openSideMenu && <SideMenu setOpenSideMenu={setOpenSideMenu} />}
     </HeaderContainer>
   );
 }
