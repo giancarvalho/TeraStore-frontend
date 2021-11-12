@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { BsCartPlus, BsCartCheck } from 'react-icons/bs';
 import { useHistory } from 'react-router-dom';
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import CartContext from '../../../contexts/CartContext';
+import calcNumItemsInCart from '../../../utils/cart/calcNumItemsInCart';
 
 import {
   ProductContainer,
@@ -16,10 +17,16 @@ import {
 } from './StylesProductCard';
 
 export default function ProductCard({ productData }) {
-  const { addToCart } = useContext(CartContext);
+  const history = useHistory();
+  const { addToCart, deleteFromCart, cart } = useContext(CartContext);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
   const [nItemsInCart, setnItemsInCart] = useState(0);
-  const history = useHistory();
+
+  useEffect(() => {
+    const numItems = calcNumItemsInCart(cart, productData.id);
+    setIsAddBtnClicked(numItems > 0);
+    setnItemsInCart(numItems);
+  }, [cart]);
 
   function addItem() {
     addToCart(productData.id);
@@ -31,6 +38,9 @@ export default function ProductCard({ productData }) {
     addToCart(productData.id);
     history.push('/checkout');
   }
+
+  console.log('card rerendered');
+
   return (
     <ProductContainer>
       <img src={productData.image} alt="cooler" />
@@ -43,20 +53,24 @@ export default function ProductCard({ productData }) {
       </DetailsContainer>
       <ButtonsContainer>
         <BuyButton onClick={() => buyItem()}>Buy</BuyButton>
-
+        <BuyButton onClick={() => deleteFromCart(productData.id, 3)}>
+          Del
+        </BuyButton>
         <CartButton onClick={() => addItem()} clicked={isAddBtnClicked}>
-          <CSSTransition
-            in={isAddBtnClicked}
-            timeout={200}
-            classNames="icon"
-            key={productData.name}
-          >
-            <>
-              {isAddBtnClicked ? <BsCartCheck /> : <BsCartPlus />}
+          <SwitchTransition>
+            <CSSTransition
+              in={isAddBtnClicked}
+              timeout={200}
+              classNames="icon"
+              key={isAddBtnClicked ? productData.name : productData.id}
+            >
+              <>
+                {isAddBtnClicked ? <BsCartCheck /> : <BsCartPlus />}
 
-              {isAddBtnClicked && <p> ({nItemsInCart})</p>}
-            </>
-          </CSSTransition>
+                {isAddBtnClicked && <p> ({nItemsInCart})</p>}
+              </>
+            </CSSTransition>
+          </SwitchTransition>
         </CartButton>
       </ButtonsContainer>
     </ProductContainer>

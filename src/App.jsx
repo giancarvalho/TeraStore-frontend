@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import CartContext from './contexts/CartContext';
 import saveCartToStorage from './utils/cart/saveCartToStorage';
 import getCartFromStorage from './utils/cart/getCartFromStorage';
+import filterSelectedAmount from './utils/cart/filterSelectedAmount';
 
 function App() {
   const storedCart = getCartFromStorage();
@@ -16,8 +17,8 @@ function App() {
     setCart([...newCartList]);
   }
 
-  function deleteFromCart(itemId) {
-    const newCartList = cart.items.filter((item) => item !== itemId);
+  function deleteFromCart(itemId, amount) {
+    const newCartList = filterSelectedAmount({ cart, itemId, amount });
     saveNewList(newCartList);
   }
 
