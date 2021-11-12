@@ -18,10 +18,11 @@ import {
 
 export default function ProductCard({ productData }) {
   const history = useHistory();
-  const { addToCart, deleteFromCart, cart } = useContext(CartContext);
+  const { addToCart, cart } = useContext(CartContext);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
   const [nItemsInCart, setnItemsInCart] = useState(0);
 
+  // makes sure nItemsInCart is updated if cart changes
   useEffect(() => {
     const numItems = calcNumItemsInCart(cart, productData.id);
     setIsAddBtnClicked(numItems > 0);
@@ -39,8 +40,6 @@ export default function ProductCard({ productData }) {
     history.push('/checkout');
   }
 
-  console.log('card rerendered');
-
   return (
     <ProductContainer>
       <img src={productData.image} alt="cooler" />
@@ -53,14 +52,11 @@ export default function ProductCard({ productData }) {
       </DetailsContainer>
       <ButtonsContainer>
         <BuyButton onClick={() => buyItem()}>Buy</BuyButton>
-        <BuyButton onClick={() => deleteFromCart(productData.id, 3)}>
-          Del
-        </BuyButton>
         <CartButton onClick={() => addItem()} clicked={isAddBtnClicked}>
           <SwitchTransition>
             <CSSTransition
               in={isAddBtnClicked}
-              timeout={200}
+              timeout={150}
               classNames="icon"
               key={isAddBtnClicked ? productData.name : productData.id}
             >

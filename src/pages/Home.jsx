@@ -12,11 +12,7 @@ export default function Home() {
   const [productsList, setProductsList] = useState([]);
 
   useEffect(() => {
-    getLastProducts()
-      .then((response) => setProductsList(response.data))
-      .catch(() => {
-        setTimeout(window.location.reload(), 15000);
-      });
+    getLastProducts().then((response) => setProductsList(response.data));
   }, []);
 
   return (

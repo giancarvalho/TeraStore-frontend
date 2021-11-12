@@ -71,11 +71,11 @@ const CartButton = styled.button`
   }
   .icon-exit-active {
     opacity: 0;
-    transition: opacity 200ms ease-out;
+    transition: opacity 150ms ease-out;
   }
   .icon-enter-active {
     opacity: 1;
-    transition: opacity 200ms ease-in;
+    transition: opacity 150ms ease-in;
   }
 
   p {
