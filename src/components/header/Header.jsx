@@ -1,3 +1,5 @@
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable implicit-arrow-linebreak */
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
@@ -14,7 +16,7 @@ export default function Header() {
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const [openSideMenu, setOpenSideMenu] = useState(false);
   const history = useHistory();
-
+  console.log(openSideMenu);
   function menuOrLoginPage() {
     if (isSignedIn) {
       setOpenUserMenu(!openUserMenu);
@@ -63,7 +65,18 @@ export default function Header() {
         </LoginButton>
         <Cart />
       </RightContainer>
-      {openSideMenu && <SideMenu setOpenSideMenu={setOpenSideMenu} />}
+      <CSSTransition
+        key="sidekey"
+        in={openSideMenu}
+        timeout={150}
+        classNames="sidemenu"
+        unmountOnExit
+      >
+        <SideMenu
+          setOpenSideMenu={setOpenSideMenu}
+          openSideMenu={openSideMenu}
+        />
+      </CSSTransition>
     </HeaderContainer>
   );
 }
@@ -83,6 +96,21 @@ const HeaderContainer = styled.header`
 
   @media (max-width: 600px) {
     padding: 0 5px;
+  }
+
+  .sidemenu-enter {
+    opacity: 0;
+  }
+  .sidemenu-enter-active {
+    opacity: 1;
+    transition: all 150ms ease-in;
+  }
+  .sidemenu-exit {
+    opacity: 1;
+  }
+  .sidemenu-exit-active {
+    opacity: 0;
+    transition: all 150ms ease-out;
   }
 `;
 
@@ -134,7 +162,8 @@ const LoginButton = styled(ActionButton)`
   position: relative;
   background-color: #000;
 
-  border: ${({ isSignedIn }) => (isSignedIn ? '1px solid rgba(255 ,255 ,255, 0.1)' : 'none')};
+  border: ${({ isSignedIn }) =>
+    isSignedIn ? '1px solid rgba(255 ,255 ,255, 0.1)' : 'none'};
 
   p {
     font-size: 14px;

@@ -4,22 +4,13 @@ import { Link } from 'react-router-dom';
 import { AiOutlineClose } from 'react-icons/ai';
 import ActionButton from '../buttons/ActionButton';
 import TeraStore from '../logo/Logo';
+import { getCategoriesList } from '../../services/services';
 
 export default function SideMenu({ setOpenSideMenu }) {
   const [categoriesList, setCategoriesList] = useState([]);
-  const list = [
-    'keyboard',
-    'ram',
-    'stuff',
-    'stuff2',
-    'more stuff',
-    'pc gamers',
-    'dildos',
-  ];
 
   useEffect(() => {
-    // substitute here for api call
-    setCategoriesList(list);
+    getCategoriesList().then((response) => setCategoriesList(response.data));
   }, []);
 
   return (
@@ -32,9 +23,9 @@ export default function SideMenu({ setOpenSideMenu }) {
           </CloseMenu>
         </MenuHeaderContainer>
         <CategoriesContainer>
-          {categoriesList.map((categoryName) => (
-            <Link to={`category/${categoryName}`}>
-              <Category>{categoryName}</Category>
+          {categoriesList.map((category) => (
+            <Link to={`category/${category.name}`}>
+              <Category>{category.name}</Category>
             </Link>
           ))}
         </CategoriesContainer>
@@ -52,7 +43,6 @@ const ModalContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.589);
 `;
 const MenuContainer = styled.nav`
-  width: 20%;
   position: fixed;
   left: 0;
   top: 0;
@@ -70,6 +60,7 @@ const MenuHeaderContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const CategoriesContainer = styled.ul`
@@ -86,9 +77,16 @@ const CloseMenu = styled(ActionButton)`
   background-color: transparent;
   color: #fff;
   transition: all 250ms ease-in-out;
+  margin-left: 10px;
   :hover {
     background-color: #ffffff;
     color: #000;
+  }
+
+  @media (max-width: 600px) {
+    min-height: 30px;
+    min-width: auto;
+    font-size: 16px;
   }
 `;
 
