@@ -2,6 +2,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import onClickOutside from 'react-onclickoutside';
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 import { AiOutlineMenu } from 'react-icons/ai';
@@ -11,12 +12,14 @@ import ActionButton from '../buttons/ActionButton';
 import Cart from '../cart/Cart';
 import SideMenu from '../sidemenu/SideMenu';
 
-export default function Header() {
+function Header() {
   const [isSignedIn] = useState(true);
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const [openSideMenu, setOpenSideMenu] = useState(false);
   const history = useHistory();
-  console.log(openSideMenu);
+
+  Header.handleClickOutside = () => setOpenUserMenu(false);
+
   function menuOrLoginPage() {
     if (isSignedIn) {
       setOpenUserMenu(!openUserMenu);
@@ -34,7 +37,7 @@ export default function Header() {
   return (
     <HeaderContainer>
       <LeftContainer>
-        <MenuButton onClick={() => setOpenSideMenu(!openSideMenu)}>
+        <MenuButton onClick={() => setOpenSideMenu(true)}>
           <AiOutlineMenu />
         </MenuButton>
         <TeraStore />
@@ -80,6 +83,12 @@ export default function Header() {
     </HeaderContainer>
   );
 }
+
+const clickOutsideConfig = {
+  handleClickOutside: () => Header.handleClickOutside,
+};
+
+export default onClickOutside(Header, clickOutsideConfig);
 
 const HeaderContainer = styled.header`
   height: 60px;
