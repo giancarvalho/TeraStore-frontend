@@ -1,3 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable arrow-body-style */
+/* eslint-disable brace-style */
+/* eslint-disable indent */
+/* eslint-disable semi */
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import PageContainer from '../../components/containers/PageContainer';
@@ -6,55 +11,36 @@ import Footer from '../../components/footer/Footer';
 import ContentContainer from '../../components/containers/ContentContainer';
 import Item from './elements/Item';
 import CartContext from '../../contexts/CartContext';
+import { getSelectedProducts } from '../../services/services';
 
 export default function Checkout() {
   const [chosenItems, setChosenItems] = useState([]);
   const [total, setTotal] = useState(0);
   const { cart } = useContext(CartContext);
 
-  console.log(cart);
-
-  const mockedCheckout = [
-    {
-      amount: 2,
-      details: {
-        id: 1,
-        name: 'Cadeira Gamer AKRacing Branca',
-        image:
-          'https://patoloco.com.br/arquivos/produtos/imagens_adicionais/2cb40fe4f19553e2f92c2d92c3577d88a62dfa15.jpeg',
-        price: 2349.9,
-      },
-    },
-    {
-      amount: 1,
-      details: {
-        id: 2,
-        name: 'Teclado Razer Huntsman Preto',
-        image:
-          'https://a-static.mlcdn.com.br/1500x1500/teclado-razer-gamer-huntsman-mini-preto-60/mbeletronicospalhoca/15fb3e1ea8fc11eba0834201ac18500e/2ad7dc2000d278360c678e4795e4fbff.jpg',
-        price: 1399,
-      },
-    },
-    {
-      amount: 3,
-      details: {
-        id: 3,
-        name: 'Mouse Razer Basilisk RGB',
-        image:
-          'https://ae01.alicdn.com/kf/H58c503ee5a9644c495231bbe5a3e5123m/Razer-basilisk-ultimate-edition-gaming-mouse-sem-fio-20000dpi-rgb-base-de-hipervelocidade-tecnologia-sem-fio.jpg_Q90.jpg_.webp',
-        price: 899.9,
-      },
-    },
-  ];
+  function addAmount(product) {
+    return {
+      ...product,
+      amount: cart.filter((id) => id === product.id).length,
+    };
+  }
 
   useEffect(() => {
-    setTotal(
-      mockedCheckout.reduce(
-        (acc, curr) => acc + curr.details.price * curr.amount,
-        0,
-      ),
-    );
-    setChosenItems(mockedCheckout);
+    getSelectedProducts([...new Set(cart)])
+      .then((response) => {
+        let productsData = response.data;
+        console.log(productsData);
+        // eslint-disable-next-line max-len
+        productsData = productsData.map(addAmount);
+        setTotal(
+          productsData.reduce(
+            (acc, product) => acc + product.price * product.amount,
+            0
+          )
+        );
+        setChosenItems(productsData);
+      })
+      .catch((error) => console.log(error.response));
   }, []);
 
   return (
@@ -69,7 +55,7 @@ export default function Checkout() {
             <TableColumn>Total</TableColumn>
           </TableHeader>
           {chosenItems.map((product) => (
-            <Item product={product} key={product.details.id} />
+            <Item product={product} key={product.id} />
           ))}
           <TableFooter>
             <Total>
@@ -117,6 +103,7 @@ const TableColumn = styled.th`
   width: 15%;
   display: flex;
   justify-content: flex-end;
+  margin: 0 5px;
 `;
 
 const ProductColumn = styled.th`

@@ -4,9 +4,12 @@ import './assets/css/global.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import CartContext from './contexts/CartContext';
-import { saveCartToStorage } from './utils/cart/cart';
-import { filterSelectedAmount } from './utils/cart/cart';
-import { getCartFromStorage } from './utils/cart/cart';
+import {
+  saveCartToStorage,
+  filterSelectedAmount,
+  getCartFromStorage,
+} from './utils/cart/cart';
+import Checkout from './pages/checkout/Checkout';
 
 function App() {
   const storedCart = getCartFromStorage();
@@ -30,18 +33,21 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" exact>
-          <CartContext.Provider
-            value={{
-              cart,
-              setCart,
-              deleteFromCart,
-              addToCart,
-            }}
-          >
+        <CartContext.Provider
+          value={{
+            cart,
+            setCart,
+            deleteFromCart,
+            addToCart,
+          }}
+        >
+          <Route path="/" exact>
             <Home />
-          </CartContext.Provider>
-        </Route>
+          </Route>
+          <Route path="/checkout" exact>
+            <Checkout />
+          </Route>
+        </CartContext.Provider>
       </Switch>
     </Router>
   );

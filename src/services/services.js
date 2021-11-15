@@ -8,5 +8,8 @@ function getCategoriesList() {
   return axiosBase.get('/categories');
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export { getLastProducts, getCategoriesList };
+function getSelectedProducts(idList) {
+  return axiosBase.get('/products', idList);
+}
+
+export { getLastProducts, getCategoriesList, getSelectedProducts };

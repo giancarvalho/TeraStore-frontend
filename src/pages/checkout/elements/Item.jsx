@@ -3,7 +3,9 @@ import styled from 'styled-components';
 
 export default function Item({ product }) {
   const [value, setValue] = useState(product.amount);
-  const { details, amount } = product;
+  const {
+    image, name, price, amount
+  } = product;
 
   function controlAmount(e) {
     if (e.target.value < 1) return;
@@ -13,7 +15,7 @@ export default function Item({ product }) {
   return (
     <TableContent>
       <Td>
-        <img src={details.image} alt={details.name} />
+        <img src={image} alt={name} />
         Cadeira gamer
       </Td>
       <Td>
@@ -23,8 +25,8 @@ export default function Item({ product }) {
           onChange={(e) => controlAmount(e)}
         />
       </Td>
-      <Td>{details.price}</Td>
-      <Td>{details.price * amount}</Td>
+      <Td>{price}</Td>
+      <Td>{price * amount}</Td>
     </TableContent>
   );
 }
@@ -45,6 +47,7 @@ const TableContent = styled.tr`
 
 const SelectAmount = styled.input`
   width: 50%;
+  max-width: 60px;
   background-color: #2f2f2f;
   color: #fff;
   border-radius: 4px;

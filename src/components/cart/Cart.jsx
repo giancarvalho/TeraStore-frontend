@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 import { CgShoppingCart } from 'react-icons/cg';
 import ActionButton from '../buttons/ActionButton';
 import CartContext from '../../contexts/CartContext';
 
 export default function Cart() {
   const { cart } = useContext(CartContext);
+  const history = useHistory();
 
   return (
-    <CartButton fontSize="35px">
+    <CartButton fontSize="35px" onClick={() => history.push('/checkout')}>
       <CgShoppingCart />
       <ItemCounter>{cart.length}</ItemCounter>
     </CartButton>
