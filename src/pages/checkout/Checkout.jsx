@@ -9,25 +9,36 @@ import CartContext from '../../contexts/CartContext';
 import { getSelectedProducts } from '../../services/services';
 import StyledButton from '../../components/buttons/StyledButton';
 import { useHistory } from 'react-router';
+import CheckoutForm from '../backup/elements/CheckoutForm';
 
 export default function Checkout() {
   const [chosenItems, setChosenItems] = useState([]);
   const [total, setTotal] = useState(0);
   const { cart } = useContext(CartContext);
   const history = useHistory();
+  const [showForm, setShowForm] = useState(false);
 
   function redirectOrProceed() {
+    if (cart.length < 1) return;
     // if user is logged in, proceed to checkout
-
-    history.push('/sign-in');
+    setShowForm(true);
+    // history.push('/sign-in');
   }
 
   function addAmount(product) {
-    window.scrollTo(0, 0);
     return {
       ...product,
       amount: cart.filter((id) => id === product.id).length,
     };
+  }
+
+  function calculateTotal(productList) {
+    setTotal(
+      productList.reduce(
+        (acc, product) => acc + product.price * product.amount,
+        0
+      )
+    );
   }
 
   useEffect(() => {
@@ -36,17 +47,13 @@ export default function Checkout() {
         let productsData = response.data;
         productsData = productsData.map(addAmount);
 
-        setTotal(
-          productsData.reduce(
-            (acc, product) => acc + product.price * product.amount,
-            0
-          )
-        );
+        calculateTotal(productsData);
         setChosenItems(productsData);
       })
       .catch((error) => console.log(error.response));
   }, []);
 
+  console.log('teste');
   return (
     <PageContainer>
       <Header />
@@ -58,9 +65,19 @@ export default function Checkout() {
             <TableColumn>Price</TableColumn>
             <TableColumn>Total</TableColumn>
           </TableHeader>
-          {chosenItems.map((product) => (
-            <Item product={product} key={product.id} />
-          ))}
+          {chosenItems.length ? (
+            chosenItems.map((product) => (
+              <Item
+                product={product}
+                setChosenItems={setChosenItems}
+                calculateTotal={calculateTotal}
+                chosenItems={chosenItems}
+                key={product.id}
+              />
+            ))
+          ) : (
+            <h6>Oops, your cart is empty</h6>
+          )}
           <TableFooter>
             <Total>
               <span>Total</span>
@@ -69,10 +86,13 @@ export default function Checkout() {
           </TableFooter>
         </Table>
         <ButtonContainer>
-          <StyledButton onClick={() => redirectOrProceed()}>
-            Go to checkout
-          </StyledButton>
+          {!showForm && (
+            <StyledButton onClick={() => redirectOrProceed()}>
+              Go to checkout
+            </StyledButton>
+          )}
         </ButtonContainer>
+        {showForm && <CheckoutForm chosenItems={chosenItems} />}
       </ContentContainer>
       <Footer />
     </PageContainer>
@@ -81,7 +101,7 @@ export default function Checkout() {
 
 const Table = styled.table`
   margin: 20px auto;
-  width: 70%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   background-color: #242424;
@@ -94,7 +114,12 @@ const Table = styled.table`
     justify-content: flex-end;
   }
 
-  @media (max-width: 400px) {
+  h6 {
+    margin: 20px auto;
+    color: #747474;
+  }
+
+  @media (max-width: 600px) {
     width: 95%;
   }
 `;

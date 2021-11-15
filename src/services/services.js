@@ -1,5 +1,13 @@
 import axiosBase from './axiosBase';
 
+function createBearerAuth(token) {
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+}
+
 function getLastProducts() {
   return axiosBase.get('/products');
 }
@@ -12,4 +20,18 @@ function getSelectedProducts(idList) {
   return axiosBase.post('/cart', { ids: idList });
 }
 
-export { getLastProducts, getCategoriesList, getSelectedProducts };
+function getFormDetails() {
+  return axiosBase.get('/form-details');
+}
+
+function sendOrder(orderData) {
+  return axiosBase.post('/order', orderData, createBearerAuth('dkfjdkfj'));
+}
+
+export {
+  getLastProducts,
+  getCategoriesList,
+  getSelectedProducts,
+  getFormDetails,
+  sendOrder,
+};

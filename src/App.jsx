@@ -10,6 +10,7 @@ import {
   getCartFromStorage,
 } from './utils/cart/cart';
 import Checkout from './pages/checkout/Checkout';
+import ScrollToTop from './hooks/ScrollToTop';
 
 function App() {
   const storedCart = getCartFromStorage();
@@ -32,6 +33,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Switch>
         <CartContext.Provider
           value={{
