@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import CartContext from '../../../contexts/CartContext';
+import { useContext } from 'react';
 
 export default function Item({ product }) {
   const [value, setValue] = useState(product.amount);
   const { image, name, price, amount } = product;
+  const { addToCart, deleteFromCart } = useContext(CartContext);
 
   function controlAmount(e) {
     if (e.target.value < 1) return;
+
+    if (e.target.value > product.amount) {
+      addToCart(product.id);
+    } else {
+      deleteFromCart(product.id, 1);
+    }
+    product.amount = e.target.value;
     setValue(e.target.value);
   }
 

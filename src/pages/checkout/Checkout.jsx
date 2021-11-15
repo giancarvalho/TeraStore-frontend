@@ -7,13 +7,23 @@ import ContentContainer from '../../components/containers/ContentContainer';
 import Item from './elements/Item';
 import CartContext from '../../contexts/CartContext';
 import { getSelectedProducts } from '../../services/services';
+import StyledButton from '../../components/buttons/StyledButton';
+import { useHistory } from 'react-router';
 
 export default function Checkout() {
   const [chosenItems, setChosenItems] = useState([]);
   const [total, setTotal] = useState(0);
   const { cart } = useContext(CartContext);
+  const history = useHistory();
+
+  function redirectOrProceed() {
+    // if user is logged in, proceed to checkout
+
+    history.push('/sign-in');
+  }
 
   function addAmount(product) {
+    window.scrollTo(0, 0);
     return {
       ...product,
       amount: cart.filter((id) => id === product.id).length,
@@ -24,8 +34,8 @@ export default function Checkout() {
     getSelectedProducts([...new Set(cart)])
       .then((response) => {
         let productsData = response.data;
-        console.log(productsData);
         productsData = productsData.map(addAmount);
+
         setTotal(
           productsData.reduce(
             (acc, product) => acc + product.price * product.amount,
@@ -58,6 +68,11 @@ export default function Checkout() {
             </Total>
           </TableFooter>
         </Table>
+        <ButtonContainer>
+          <StyledButton onClick={() => redirectOrProceed()}>
+            Go to checkout
+          </StyledButton>
+        </ButtonContainer>
       </ContentContainer>
       <Footer />
     </PageContainer>
@@ -136,4 +151,10 @@ const Total = styled.td`
     font-weight: 700;
     color: #76b900;
   }
+`;
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
