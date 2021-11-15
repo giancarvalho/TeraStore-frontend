@@ -4,7 +4,7 @@ import { BsCartPlus, BsCartCheck } from 'react-icons/bs';
 import { useHistory } from 'react-router-dom';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import CartContext from '../../../contexts/CartContext';
-import calcNumItemsInCart from '../../../utils/cart/calcNumItemsInCart';
+import { calcNumItemsInCart } from '../../../utils/cart/cart';
 
 import {
   ProductContainer,

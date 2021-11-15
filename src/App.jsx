@@ -4,9 +4,9 @@ import './assets/css/global.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import CartContext from './contexts/CartContext';
-import saveCartToStorage from './utils/cart/saveCartToStorage';
-import getCartFromStorage from './utils/cart/getCartFromStorage';
-import filterSelectedAmount from './utils/cart/filterSelectedAmount';
+import { saveCartToStorage } from './utils/cart/cart';
+import { filterSelectedAmount } from './utils/cart/cart';
+import { getCartFromStorage } from './utils/cart/cart';
 
 function App() {
   const storedCart = getCartFromStorage();
