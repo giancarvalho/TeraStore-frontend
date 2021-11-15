@@ -3,9 +3,7 @@ import styled from 'styled-components';
 
 export default function Item({ product }) {
   const [value, setValue] = useState(product.amount);
-  const {
-    image, name, price, amount
-  } = product;
+  const { image, name, price, amount } = product;
 
   function controlAmount(e) {
     if (e.target.value < 1) return;
@@ -43,6 +41,10 @@ const TableContent = styled.tr`
     border-radius: 4px;
     margin-right: 10px;
   }
+
+  @media (max-width: 700px) {
+    font-size: 13px;
+  }
 `;
 
 const SelectAmount = styled.input`
@@ -60,6 +62,7 @@ const Td = styled.td`
   align-items: center;
   justify-content: flex-end;
   width: 15%;
+  margin: 0 7px;
 
   :first-child {
     width: 55%;

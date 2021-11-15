@@ -1,8 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable arrow-body-style */
-/* eslint-disable brace-style */
-/* eslint-disable indent */
-/* eslint-disable semi */
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import PageContainer from '../../components/containers/PageContainer';
@@ -30,7 +25,6 @@ export default function Checkout() {
       .then((response) => {
         let productsData = response.data;
         console.log(productsData);
-        // eslint-disable-next-line max-len
         productsData = productsData.map(addAmount);
         setTotal(
           productsData.reduce(
@@ -51,7 +45,7 @@ export default function Checkout() {
           <TableHeader>
             <ProductColumn>Product</ProductColumn>
             <TableColumn>Amount</TableColumn>
-            <TableColumn>Unit Price</TableColumn>
+            <TableColumn>Price</TableColumn>
             <TableColumn>Total</TableColumn>
           </TableHeader>
           {chosenItems.map((product) => (
@@ -60,10 +54,7 @@ export default function Checkout() {
           <TableFooter>
             <Total>
               <span>Total</span>
-              <p>
-                $
-                {total}
-              </p>
+              <p>R${total}</p>
             </Total>
           </TableFooter>
         </Table>
@@ -87,6 +78,10 @@ const Table = styled.table`
     width: 100%;
     justify-content: flex-end;
   }
+
+  @media (max-width: 400px) {
+    width: 95%;
+  }
 `;
 
 const TableHeader = styled.tr`
@@ -96,7 +91,11 @@ const TableHeader = styled.tr`
   justify-content: space-between;
   font-weight: 700;
   border-bottom: 1px solid #a8a8a8;
-  font-size: 18px;
+  font-size: 15px;
+
+  @media (max-width: 700px) {
+    font-size: 13px;
+  }
 `;
 
 const TableColumn = styled.th`
@@ -124,6 +123,10 @@ const Total = styled.td`
   display: flex;
   justify-content: space-between;
   font-size: 20px;
+
+  @media (max-width: 700px) {
+    font-size: 15px;
+  }
 
   span {
     font-weight: 700;
