@@ -9,7 +9,7 @@ function getCategoriesList() {
 }
 
 function getSelectedProducts(idList) {
-  return axiosBase.get('/products', idList);
+  return axiosBase.post('/cart', { ids: idList });
 }
 
 export { getLastProducts, getCategoriesList, getSelectedProducts };
