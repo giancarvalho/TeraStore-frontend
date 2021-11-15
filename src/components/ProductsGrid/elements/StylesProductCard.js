@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
 const ProductContainer = styled.li`
+
   img {
     height: 150px;
     width: 100%;
     border-radius: 4px 4px 0 0;
     object-fit: cover;
+    background-color: #fff;
   }
 `;
 
