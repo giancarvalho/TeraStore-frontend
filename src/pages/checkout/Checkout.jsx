@@ -10,19 +10,28 @@ import { getSelectedProducts } from '../../services/services';
 import StyledButton from '../../components/buttons/StyledButton';
 import { useHistory } from 'react-router';
 import CheckoutForm from './elements/CheckoutForm';
+import UserContext from '../../contexts/UserContext';
 
-export default function Checkout() {
+export default function Checkout({ sendAlert }) {
   const [chosenItems, setChosenItems] = useState([]);
   const [total, setTotal] = useState(0);
   const { cart } = useContext(CartContext);
   const history = useHistory();
   const [showForm, setShowForm] = useState(false);
+  const { user } = useContext(UserContext);
 
   function redirectOrProceed() {
-    if (cart.length < 1) return;
-    // if user is logged in, proceed to checkout
-    setShowForm(true);
-    // history.push('/sign-in');
+    if (cart.length < 1)
+      return sendAlert({
+        error: true,
+        message: "You don't have any items to checkout",
+      });
+
+    if (user.token) {
+      setShowForm(true);
+    } else {
+      history.push('/sign-in');
+    }
   }
 
   function addAmount(product) {
@@ -97,7 +106,7 @@ export default function Checkout() {
         <ButtonContainer>
           {!showForm && (
             <StyledButton onClick={() => redirectOrProceed()}>
-              Go to checkout
+              {user.token ? 'Go to checkout' : 'Sign In and Checkout'}
             </StyledButton>
           )}
         </ButtonContainer>

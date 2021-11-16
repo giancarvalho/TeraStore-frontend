@@ -21,13 +21,13 @@ export default function Item({
 
   function controlAmount(operation) {
     let newValue;
-    if (newValue < 1) return;
 
     if (operation === 'add') {
       newValue = value + 1;
       addToCart(product.id);
     } else {
       newValue = value - 1;
+      if (newValue < 1) return;
       deleteFromCart(product.id, 1);
     }
 
@@ -78,6 +78,7 @@ const TableContent = styled.tr`
     height: 50px;
     border-radius: 4px;
     margin-right: 10px;
+    background-color: #fff;
   }
   :hover {
     background-color: #414141;
@@ -118,6 +119,7 @@ const Td = styled.td`
   justify-content: flex-end;
   width: 15%;
   margin: 0 7px;
+  text-transform: capitalize;
 
   :first-child {
     width: 55%;

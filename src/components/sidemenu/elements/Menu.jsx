@@ -18,7 +18,11 @@ function Menu({ setOpenSideMenu, categoriesList }) {
       </MenuHeaderContainer>
       <CategoriesContainer>
         {categoriesList.map((category) => (
-          <Link to={`category/${category.name}`} key={category.id}>
+          <Link
+            to={`/category/${category.id}`}
+            key={category.id}
+            onClick={() => setOpenSideMenu(false)}
+          >
             <Category>{category.name}</Category>
           </Link>
         ))}
@@ -62,6 +66,10 @@ const CategoriesContainer = styled.ul`
   font-size: 22px;
   font-weight: 700;
   padding-top: 15px;
+
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 
 const CloseMenu = styled(ActionButton)`

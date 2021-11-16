@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import ProductCard from './elements/ProductCard';
 
-export default function ProductsGrid({ productsList }) {
+export default function ProductsGrid({ productsList, name }) {
   // pass an array with products
   return (
     <GridContainer>
-      <h1>New Releases</h1>
+      <h1>{name}</h1>
       <ProductsContainer>
         {productsList.map((product) => (
           <ProductCard key={product.id} productData={product} />
@@ -23,6 +23,7 @@ const GridContainer = styled.main`
   h1 {
     font-size: 28px;
     margin-bottom: 20px;
+    text-transform: capitalize;
   }
 
   @media (max-width: 500px) {

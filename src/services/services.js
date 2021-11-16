@@ -24,8 +24,20 @@ function getFormDetails() {
   return axiosBase.get('/form-details');
 }
 
-function sendOrder(orderData) {
-  return axiosBase.post('/order', orderData, createBearerAuth('dkfjdkfj'));
+function sendOrder(orderData, token) {
+  return axiosBase.post('/order', orderData, createBearerAuth(token));
+}
+
+function createUser(userData) {
+  return axiosBase.post('/sign-up', userData);
+}
+
+function authenticateUser(userData) {
+  return axiosBase.post('/sign-in', userData);
+}
+
+function getCategoryProducts(categoryId) {
+  return axiosBase.get(`/category-products?categoryId=${categoryId}`);
 }
 
 export {
@@ -34,4 +46,7 @@ export {
   getSelectedProducts,
   getFormDetails,
   sendOrder,
+  createUser,
+  authenticateUser,
+  getCategoryProducts,
 };

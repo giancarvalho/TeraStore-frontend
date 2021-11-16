@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import StyledButton from '../../../components/buttons/StyledButton';
+import CartContext from '../../../contexts/CartContext';
+import UserContext from '../../../contexts/UserContext';
 import { getFormDetails, sendOrder } from '../../../services/services';
 import addressSchema from '../../../validation/addressSchema';
 
@@ -9,6 +11,8 @@ export default function CheckoutForm({ chosenItems }) {
   const [states, setStates] = useState([]);
   const [paymentTypes, setPaymentType] = useState([]);
   const history = useHistory();
+  const { user } = useContext(UserContext);
+  const { deleteFromCart } = useContext(CartContext);
 
   const [address, setAddress] = useState({
     street: '',
@@ -21,7 +25,7 @@ export default function CheckoutForm({ chosenItems }) {
   });
   const [payment, setPayment] = useState(0);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  console.log(payment);
+
   useEffect(() => {
     getFormDetails().then((response) => {
       setStates(response.data.states);
@@ -37,8 +41,16 @@ export default function CheckoutForm({ chosenItems }) {
 
     if (validation.error || !payment) alert(validation.error);
 
-    sendOrder({ address, paymentId: payment, products: chosenItems })
-      .then((response) => history.push(`/success/${response.data.orderId}`))
+    sendOrder(
+      { address, paymentId: payment, products: chosenItems },
+      user.token
+    )
+      .then((response) => {
+        chosenItems.forEach((product) =>
+          deleteFromCart(product.id, product.amount)
+        );
+        history.push(`/success/${response.data.orderId}`);
+      })
       .catch((error) => console.log(error.response));
 
     setIsButtonDisabled(false);
@@ -71,7 +83,6 @@ export default function CheckoutForm({ chosenItems }) {
                   setAddress({ ...address, number: e.target.value })
                 }
                 required
-                hideArrows
               />
               <StyledInput
                 width="40%"
@@ -189,9 +200,11 @@ const InputsBox = styled.div`
   & > * {
     margin-bottom: 64px;
   }
-
+  @media (max-width: 900px) {
+    width: 78%;
+  }
   @media (max-width: 600px) {
-    width: 90%;
+    width: 92%;
   }
 `;
 
@@ -200,7 +213,8 @@ const StyledInput = styled.input`
   height: 36px;
   border-radius: 4px;
   border: none;
-  background-color: #c4c4c4;
+  background: #424242;
+  color: #fff;
   padding: 8px;
   margin: 8px 8px;
   font-family: Roboto;
@@ -210,7 +224,7 @@ const StyledInput = styled.input`
   &::placeholder {
     font-family: Roboto;
     font-weight: 400;
-    color: #000;
+    color: #fff;
   }
   :focus {
     outline: none;
@@ -222,19 +236,6 @@ const StyledInput = styled.input`
     height: 28px;
     font-size: 12px;
   }
-
-  ${(props) =>
-    props.hideArrows
-      ? `
-    &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    &[type=number] {
-      -moz-appearance: textfield;
-    }`
-      : ''};
 `;
 
 const Select = styled.select`
@@ -242,8 +243,8 @@ const Select = styled.select`
   height: 56px;
   border-radius: 4px;
   border: none;
-  background-color: #c4c4c4;
-  color: #000;
+  background: #424242;
+  color: #fff;
   padding: 8px;
   margin: 8px 8px;
   font-family: Roboto;

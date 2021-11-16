@@ -1,7 +1,6 @@
-/* eslint-disable no-confusing-arrow */
-/* eslint-disable implicit-arrow-linebreak */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import onClickOutside from 'react-onclickoutside';
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
@@ -11,11 +10,14 @@ import TeraStore from '../logo/Logo';
 import ActionButton from '../buttons/ActionButton';
 import Cart from '../cart/Cart';
 import SideMenu from '../sidemenu/SideMenu';
+import UserContext from '../../contexts/UserContext';
 
 function Header() {
-  const [isSignedIn] = useState(true);
+  const { user, setUser } = useContext(UserContext);
+  const [isSignedIn, setIsSignedIn] = useState(!!user.name);
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const [openSideMenu, setOpenSideMenu] = useState(false);
+  const isntCheckout = useLocation().pathname !== '/checkout';
   const history = useHistory();
 
   Header.handleClickOutside = () => setOpenUserMenu(false);
@@ -31,7 +33,10 @@ function Header() {
 
   function signOut(e) {
     e.stopPropagation();
-    // call signout function bellow
+    localStorage.removeItem('user');
+    setUser({ name: '', token: '' });
+    setOpenUserMenu(false);
+    setIsSignedIn(false);
   }
 
   return (
@@ -49,7 +54,7 @@ function Header() {
           onClick={() => menuOrLoginPage()}
         >
           <FaUserCircle />
-          {isSignedIn && <p>Hi, user</p>}
+          {isSignedIn && <p>Hi, {user.name}</p>}
           <CSSTransition
             key="key"
             in={openUserMenu}
@@ -66,7 +71,7 @@ function Header() {
             </UserMenuContainer>
           </CSSTransition>
         </LoginButton>
-        <Cart />
+        {isntCheckout && <Cart />}
       </RightContainer>
       <CSSTransition
         key="sidekey"
