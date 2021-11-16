@@ -5,14 +5,15 @@ import StyledButton from '../../../components/buttons/StyledButton';
 import CartContext from '../../../contexts/CartContext';
 import UserContext from '../../../contexts/UserContext';
 import { getFormDetails, sendOrder } from '../../../services/services';
+import { saveCartToStorage } from '../../../utils/cart/cart';
 import addressSchema from '../../../validation/addressSchema';
 
-export default function CheckoutForm({ chosenItems }) {
+export default function CheckoutForm({ chosenItems, sendAlert }) {
   const [states, setStates] = useState([]);
   const [paymentTypes, setPaymentType] = useState([]);
   const history = useHistory();
   const { user } = useContext(UserContext);
-  const { deleteFromCart } = useContext(CartContext);
+  const { setCart } = useContext(CartContext);
 
   const [address, setAddress] = useState({
     street: '',
@@ -33,27 +34,39 @@ export default function CheckoutForm({ chosenItems }) {
     });
   }, []);
 
+  function alertProblem(message) {
+    sendAlert({
+      message: message,
+      error: true,
+    });
+    setIsButtonDisabled(false);
+  }
+
   function submitHelper(event) {
     event.preventDefault();
     setIsButtonDisabled(true);
 
     const validation = addressSchema.validate(address);
 
-    if (validation.error || !payment) alert(validation.error);
+    if (validation.error)
+      return alertProblem(validation.error.details[0].message);
+
+    if (!payment) {
+      return alertProblem('Please, choose a payment method');
+    }
 
     sendOrder(
       { address, paymentId: payment, products: chosenItems },
       user.token
     )
       .then((response) => {
-        chosenItems.forEach((product) =>
-          deleteFromCart(product.id, product.amount)
-        );
+        setCart([]);
+        saveCartToStorage([]);
         history.push(`/success/${response.data.orderId}`);
       })
-      .catch((error) => console.log(error.response));
-
-    setIsButtonDisabled(false);
+      .catch((error) =>
+        alertProblem("We coulnd't create your order. Please, try again later.")
+      );
   }
 
   return (
@@ -127,14 +140,16 @@ export default function CheckoutForm({ chosenItems }) {
 
               <Select
                 id="states"
-                value={address.state}
+                value={address.stateId}
                 onChange={(e) =>
                   setAddress({ ...address, stateId: e.target.value })
                 }
               >
                 <option value={undefined}>State</option>
                 {states.map((state) => (
-                  <option value={state.id}>{state.name}</option>
+                  <option value={state.id} key={state.id}>
+                    {state.name}
+                  </option>
                 ))}
               </Select>
             </div>
@@ -146,7 +161,9 @@ export default function CheckoutForm({ chosenItems }) {
             >
               <option value={0}>Payment Type</option>
               {paymentTypes.map((type) => (
-                <option value={type.id}>{type.name}</option>
+                <option value={type.id} key={type.id}>
+                  {type.name}
+                </option>
               ))}
             </Select>
           </InputsBox>

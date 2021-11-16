@@ -110,7 +110,9 @@ export default function Checkout({ sendAlert }) {
             </StyledButton>
           )}
         </ButtonContainer>
-        {showForm && <CheckoutForm chosenItems={chosenItems} />}
+        {showForm && (
+          <CheckoutForm chosenItems={chosenItems} sendAlert={sendAlert} />
+        )}
       </ContentContainer>
       <Footer />
     </PageContainer>
