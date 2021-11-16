@@ -9,7 +9,7 @@ import CartContext from '../../contexts/CartContext';
 import { getSelectedProducts } from '../../services/services';
 import StyledButton from '../../components/buttons/StyledButton';
 import { useHistory } from 'react-router';
-import CheckoutForm from '../backup/elements/CheckoutForm';
+import CheckoutForm from './elements/CheckoutForm';
 
 export default function Checkout() {
   const [chosenItems, setChosenItems] = useState([]);
@@ -42,48 +42,57 @@ export default function Checkout() {
   }
 
   useEffect(() => {
-    getSelectedProducts([...new Set(cart)])
-      .then((response) => {
-        let productsData = response.data;
-        productsData = productsData.map(addAmount);
+    if (cart.length > 0) {
+      getSelectedProducts([...new Set(cart)])
+        .then((response) => {
+          let productsData = response.data;
+          productsData = productsData.map(addAmount);
 
-        calculateTotal(productsData);
-        setChosenItems(productsData);
-      })
-      .catch((error) => console.log(error.response));
-  }, []);
+          calculateTotal(productsData);
+          setChosenItems(productsData);
+        })
+        .catch((error) => console.log(error.response));
+    }
+  }, [cart]);
 
-  console.log('teste');
   return (
     <PageContainer>
       <Header />
       <ContentContainer>
         <Table>
-          <TableHeader>
-            <ProductColumn>Product</ProductColumn>
-            <TableColumn>Amount</TableColumn>
-            <TableColumn>Price</TableColumn>
-            <TableColumn>Total</TableColumn>
-          </TableHeader>
-          {chosenItems.length ? (
-            chosenItems.map((product) => (
-              <Item
-                product={product}
-                setChosenItems={setChosenItems}
-                calculateTotal={calculateTotal}
-                chosenItems={chosenItems}
-                key={product.id}
-              />
-            ))
-          ) : (
-            <h6>Oops, your cart is empty</h6>
-          )}
-          <TableFooter>
-            <Total>
-              <span>Total</span>
-              <p>R${total}</p>
-            </Total>
-          </TableFooter>
+          <thead>
+            <HeadRow>
+              <ProductColumn>Product</ProductColumn>
+              <TableColumn>Amount</TableColumn>
+              <TableColumn>Price</TableColumn>
+              <TableColumn>Total</TableColumn>
+            </HeadRow>
+          </thead>
+          <tbody>
+            {chosenItems.length ? (
+              chosenItems.map((product) => (
+                <Item
+                  product={product}
+                  setChosenItems={setChosenItems}
+                  calculateTotal={calculateTotal}
+                  chosenItems={chosenItems}
+                  key={product.id}
+                />
+              ))
+            ) : (
+              <MessageContainer>
+                <td>Oops, your cart is empty</td>
+              </MessageContainer>
+            )}
+          </tbody>
+          <tfoot>
+            <FooterRow>
+              <Total>
+                <span>Total</span>
+                <p>R${total}</p>
+              </Total>
+            </FooterRow>
+          </tfoot>
         </Table>
         <ButtonContainer>
           {!showForm && (
@@ -114,9 +123,8 @@ const Table = styled.table`
     justify-content: flex-end;
   }
 
-  h6 {
-    margin: 20px auto;
-    color: #747474;
+  @media (max-width: 900px) {
+    width: 80%;
   }
 
   @media (max-width: 600px) {
@@ -124,7 +132,20 @@ const Table = styled.table`
   }
 `;
 
-const TableHeader = styled.tr`
+const MessageContainer = styled.tr`
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #747474;
+
+  td {
+    margin: 0 auto;
+  }
+`;
+
+const HeadRow = styled.tr`
   height: 30px;
   margin: 5px;
   display: flex;
@@ -150,7 +171,7 @@ const ProductColumn = styled.th`
   display: flex;
 `;
 
-const TableFooter = styled.tr`
+const FooterRow = styled.tr`
   border-top: 1px solid #a8a8a8;
   height: 60px;
   margin: 5px;

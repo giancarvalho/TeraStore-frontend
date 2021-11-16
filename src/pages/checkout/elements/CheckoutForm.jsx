@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import StyledButton from '../../../components/buttons/StyledButton';
 import { getFormDetails, sendOrder } from '../../../services/services';
@@ -7,6 +8,7 @@ import addressSchema from '../../../validation/addressSchema';
 export default function CheckoutForm({ chosenItems }) {
   const [states, setStates] = useState([]);
   const [paymentTypes, setPaymentType] = useState([]);
+  const history = useHistory();
 
   const [address, setAddress] = useState({
     street: '',
@@ -18,7 +20,7 @@ export default function CheckoutForm({ chosenItems }) {
     stateId: 0,
   });
   const [payment, setPayment] = useState(0);
-  const [isButtonDisabled, setisButtonDisabled] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   console.log(payment);
   useEffect(() => {
     getFormDetails().then((response) => {
@@ -29,14 +31,17 @@ export default function CheckoutForm({ chosenItems }) {
 
   function submitHelper(event) {
     event.preventDefault();
+    setIsButtonDisabled(true);
 
     const validation = addressSchema.validate(address);
 
-    if (validation.error || !payment) return console.log(validation.error);
+    if (validation.error || !payment) alert(validation.error);
 
     sendOrder({ address, paymentId: payment, products: chosenItems })
-      .then((response) => console.log(response.data))
+      .then((response) => history.push(`/success/${response.data.orderId}`))
       .catch((error) => console.log(error.response));
+
+    setIsButtonDisabled(false);
   }
 
   return (

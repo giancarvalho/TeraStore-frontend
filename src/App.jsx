@@ -11,6 +11,7 @@ import {
 } from './utils/cart/cart';
 import Checkout from './pages/checkout/Checkout';
 import ScrollToTop from './hooks/ScrollToTop';
+import SuccessPage from './pages/SuccessPage';
 
 function App() {
   const storedCart = getCartFromStorage();
@@ -48,6 +49,10 @@ function App() {
           </Route>
           <Route path="/checkout" exact>
             <Checkout />
+          </Route>
+
+          <Route path="/success/:id" exact>
+            <SuccessPage />
           </Route>
         </CartContext.Provider>
       </Switch>
