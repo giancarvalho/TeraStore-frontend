@@ -9,6 +9,7 @@ import Input from '../components/input/Input';
 import styled from 'styled-components';
 import Header from '../components/header/Header';
 import { createUser } from '../services/services';
+import userSchema from '../validation/newUserSchema';
 
 export default function SignUp({ sendAlert }) {
   const [disabled, setDisabled] = useState(false);
@@ -22,14 +23,26 @@ export default function SignUp({ sendAlert }) {
 
   function register(e) {
     e.preventDefault();
+
+    const validation = userSchema.validate(form);
+
+    if (validation.error) {
+      sendAlert({
+        message: validation.error.details[0].message,
+        error: true,
+      });
+      setDisabled(false);
+      return;
+    }
+
     setDisabled(true);
     createUser(form)
       .then(() => history.push('/sign-in'))
       .catch((error) => {
         if (error.response.status === 409)
-          alert('This user is already registered');
+          sendAlert('This user is already registered');
         else
-          alert(
+          sendAlert(
             "Ops, we can't reach our server at the moment. Check your connection and reload the page."
           );
 
