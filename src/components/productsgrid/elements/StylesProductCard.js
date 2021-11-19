@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
 const ProductContainer = styled.li`
+
   img {
     height: 150px;
     width: 100%;
     border-radius: 4px 4px 0 0;
     object-fit: cover;
+    background-color: #fff;
   }
 `;
 
@@ -71,11 +73,11 @@ const CartButton = styled.button`
   }
   .icon-exit-active {
     opacity: 0;
-    transition: opacity 200ms ease-in;
+    transition: opacity 150ms ease-out;
   }
   .icon-enter-active {
     opacity: 1;
-    transition: opacity 200ms ease-in;
+    transition: opacity 150ms ease-in;
   }
 
   p {

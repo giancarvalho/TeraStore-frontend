@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router';
+import onClickOutside from 'react-onclickoutside';
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { FaUserCircle } from 'react-icons/fa';
-import { CgShoppingCart } from 'react-icons/cg';
 import TeraStore from '../logo/Logo';
 import ActionButton from '../buttons/ActionButton';
+import Cart from '../cart/Cart';
+import SideMenu from '../sidemenu/SideMenu';
+import UserContext from '../../contexts/UserContext';
 
-export default function Header() {
-  const [isSignedIn] = useState(true);
-  const [openMenu, setOpenMenu] = useState(false);
+function Header() {
+  const { user, setUser } = useContext(UserContext);
+  const [isSignedIn, setIsSignedIn] = useState(!!user.name);
+  const [openUserMenu, setOpenUserMenu] = useState(false);
+  const [openSideMenu, setOpenSideMenu] = useState(false);
+  const isntCheckout = useLocation().pathname !== '/checkout';
   const history = useHistory();
+
+  Header.handleClickOutside = () => setOpenUserMenu(false);
 
   function menuOrLoginPage() {
     if (isSignedIn) {
-      setOpenMenu(!openMenu);
+      setOpenUserMenu(!openUserMenu);
       return;
     }
 
@@ -24,13 +33,16 @@ export default function Header() {
 
   function signOut(e) {
     e.stopPropagation();
-    // call signout function bellow
+    localStorage.removeItem('user');
+    setUser({ name: '', token: '' });
+    setOpenUserMenu(false);
+    setIsSignedIn(false);
   }
 
   return (
     <HeaderContainer>
       <LeftContainer>
-        <MenuButton>
+        <MenuButton onClick={() => setOpenSideMenu(true)}>
           <AiOutlineMenu />
         </MenuButton>
         <TeraStore />
@@ -42,29 +54,46 @@ export default function Header() {
           onClick={() => menuOrLoginPage()}
         >
           <FaUserCircle />
-          {isSignedIn && <p>Hi, user</p>}
+          {isSignedIn && <p>Hi, {user.name}</p>}
           <CSSTransition
             key="key"
-            in={openMenu}
+            in={openUserMenu}
             timeout={150}
             classNames="usermenu"
             unmountOnExit
           >
             <UserMenuContainer>
               <MenuOptions>
-                <Option onClick={(e) => signOut(e)} role="button" tabindex="-1">Sign out</Option>
+                <Option onClick={(e) => signOut(e)} role="button" tabindex="-1">
+                  Sign out
+                </Option>
               </MenuOptions>
             </UserMenuContainer>
           </CSSTransition>
         </LoginButton>
-        <CartButton fontSize="35px">
-          <CgShoppingCart />
-          <ItemCounter>3</ItemCounter>
-        </CartButton>
+        {isntCheckout && <Cart />}
       </RightContainer>
+      <CSSTransition
+        key="sidekey"
+        in={openSideMenu}
+        timeout={150}
+        classNames="sidemenu"
+        unmountOnExit
+      >
+        <SideMenu
+          setOpenSideMenu={setOpenSideMenu}
+          openSideMenu={openSideMenu}
+        />
+      </CSSTransition>
     </HeaderContainer>
   );
 }
+
+const clickOutsideConfig = {
+  handleClickOutside: () => Header.handleClickOutside,
+};
+
+export default onClickOutside(Header, clickOutsideConfig);
 
 const HeaderContainer = styled.header`
   height: 60px;
@@ -79,9 +108,23 @@ const HeaderContainer = styled.header`
   left: 0;
   right: 0;
 
-
-  @media(max-width: 600px){
+  @media (max-width: 600px) {
     padding: 0 5px;
+  }
+
+  .sidemenu-enter {
+    opacity: 0;
+  }
+  .sidemenu-enter-active {
+    opacity: 1;
+    transition: all 150ms ease-in;
+  }
+  .sidemenu-exit {
+    opacity: 1;
+  }
+  .sidemenu-exit-active {
+    opacity: 0;
+    transition: all 150ms ease-out;
   }
 `;
 
@@ -94,8 +137,7 @@ const LeftContainer = styled.div`
 const MenuButton = styled(ActionButton)`
   margin: 0 10px;
 
-  @media(max-width: 600px){
-
+  @media (max-width: 600px) {
     min-height: 30px;
     min-width: auto;
     font-size: 16px;
@@ -134,51 +176,16 @@ const LoginButton = styled(ActionButton)`
   position: relative;
   background-color: #000;
 
-  border: ${({ isSignedIn }) => (isSignedIn ? '1px solid rgba(255 ,255 ,255, 0.1)' : 'none')};
+  border: ${({ isSignedIn }) =>
+    isSignedIn ? '1px solid rgba(255 ,255 ,255, 0.1)' : 'none'};
 
   p {
     font-size: 14px;
     margin-left: 10px;
   }
 
-  @media(max-width: 600px){
-   margin-right: 0;
-  }
-`;
-
-const CartButton = styled(ActionButton)`
-  width: 50px;
-  position: relative;
-
-  @media(max-width: 600px){
-    position: fixed;
-    bottom: 30px;
-    right: 15px;
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    font-size: 50px;
-  }
-`;
-
-const ItemCounter = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 20px;
-  width: 20px;
-  font-weight: bold;
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  font-size: 16px;
-  background-color: #29aaf4;
-  color: #000;
-  border-radius: 50%;
-
-  @media(max-width: 600px){
-    height: 30px;
-    width: 30px;
+  @media (max-width: 600px) {
+    margin-right: 0;
   }
 `;
 
