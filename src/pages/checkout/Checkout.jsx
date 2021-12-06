@@ -51,6 +51,12 @@ export default function Checkout({ sendAlert }) {
   }
 
   useEffect(() => {
+    if (!user.token) {
+      setShowForm(false);
+    }
+  }, [user]);
+
+  useEffect(() => {
     if (cart.length > 0) {
       getSelectedProducts([...new Set(cart)])
         .then((response) => {
