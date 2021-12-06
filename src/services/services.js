@@ -17,7 +17,7 @@ function getCategoriesList() {
 }
 
 function getSelectedProducts(idList) {
-  return axiosBase.post('/cart', { ids: idList });
+  return axiosBase.post('/products/cart', { ids: idList });
 }
 
 function getFormDetails() {
@@ -37,7 +37,7 @@ function authenticateUser(userData) {
 }
 
 function getCategoryProducts(categoryId) {
-  return axiosBase.get(`/category-products?categoryId=${categoryId}`);
+  return axiosBase.get(`/products/${categoryId}`);
 }
 
 export {

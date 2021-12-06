@@ -33,7 +33,7 @@ export default function SignIn({ sendAlert }) {
 
     if (isRegistered) {
       sendAlert({
-        message: 'Success! Sign in and start using your wallet.',
+        message: 'Success! Now sign in to your account.',
       });
     }
   }, [storedUser, history, isRegistered, sendAlert, setUser]);

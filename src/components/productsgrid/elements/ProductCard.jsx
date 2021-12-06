@@ -16,7 +16,7 @@ import {
   Title,
 } from './StylesProductCard';
 
-export default function ProductCard({ productData }) {
+export default function ProductCard({ productData, sendAlert }) {
   const history = useHistory();
   const { addToCart, cart } = useContext(CartContext);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
@@ -28,8 +28,13 @@ export default function ProductCard({ productData }) {
     setIsAddBtnClicked(numItems > 0);
     setnItemsInCart(numItems);
   }, [cart]);
-
+  console.log(productData.name, productData.stock);
   function addItem() {
+    if (nItemsInCart + 1 > productData.stock) {
+      alert('we dont have stock for this product');
+      return;
+    }
+
     addToCart(productData.id);
     setIsAddBtnClicked(true);
     setnItemsInCart(() => nItemsInCart + 1);
@@ -42,7 +47,7 @@ export default function ProductCard({ productData }) {
 
   return (
     <ProductContainer>
-      <img src={productData.image} alt="cooler" />
+      <img src={productData.image} alt={productData.name} />
       <DetailsContainer>
         <Title>{productData.name}</Title>
         <Price>
