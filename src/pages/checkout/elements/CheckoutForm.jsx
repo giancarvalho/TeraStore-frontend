@@ -7,8 +7,9 @@ import UserContext from '../../../contexts/UserContext';
 import { getFormDetails, sendOrder } from '../../../services/services';
 import { saveCartToStorage } from '../../../utils/cart/cart';
 import addressSchema from '../../../validation/addressSchema';
+import { toast } from 'react-toastify';
 
-export default function CheckoutForm({ chosenItems, sendAlert }) {
+export default function CheckoutForm({ chosenItems }) {
   const [states, setStates] = useState([]);
   const [paymentTypes, setPaymentType] = useState([]);
   const history = useHistory();
@@ -35,10 +36,7 @@ export default function CheckoutForm({ chosenItems, sendAlert }) {
   }, []);
 
   function alertProblem(message) {
-    sendAlert({
-      message: message,
-      error: true,
-    });
+    toast(message);
     setIsButtonDisabled(false);
   }
 
