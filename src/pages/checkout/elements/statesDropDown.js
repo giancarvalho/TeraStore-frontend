@@ -6,8 +6,6 @@ function StatesDropDown({ list, setData, data }) {
   const [isClicked, setIsClicked] = useState(false);
   const [chosenOption, setChosenOption] = useState(null);
 
-  console.log(data);
-
   function chooseState(e, state, id) {
     e.stopPropagation();
 

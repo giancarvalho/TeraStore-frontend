@@ -20,8 +20,8 @@ function getSelectedProducts(idList) {
   return axiosBase.post('/products/cart', { ids: idList });
 }
 
-function getFormDetails() {
-  return axiosBase.get('/form-details');
+function getFormDetails(token) {
+  return axiosBase.get('/form-details', createBearerAuth(token));
 }
 
 function sendOrder(orderData, token) {

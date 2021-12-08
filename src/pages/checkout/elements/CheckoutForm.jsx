@@ -31,7 +31,7 @@ export default function CheckoutForm({ chosenItems }) {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   useEffect(() => {
-    getFormDetails().then((response) => {
+    getFormDetails(user.token).then((response) => {
       setStates(response.data.states);
       setPaymentType(response.data.paymentTypes);
     });
