@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 import StyledButton from '../../../components/buttons/StyledButton';
 import CartContext from '../../../contexts/CartContext';
@@ -36,7 +37,7 @@ export default function CheckoutForm({ chosenItems }) {
   }, []);
 
   function alertProblem(message) {
-    toast(message);
+    toast.error(message);
     setIsButtonDisabled(false);
   }
 
@@ -167,7 +168,11 @@ export default function CheckoutForm({ chosenItems }) {
           </InputsBox>
 
           <ConfirmButton type="submit" isButtonDisabled={isButtonDisabled}>
-            Confirm Order
+            {isButtonDisabled ? (
+              <Loader type="ThreeDots" color="#ffffff" height={40} width={40} />
+            ) : (
+              'Confirm Order'
+            )}
           </ConfirmButton>
         </fieldset>
       </form>
@@ -202,6 +207,9 @@ const Wrapper = styled.div`
 `;
 
 const ConfirmButton = styled(StyledButton)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #0079ca;
 `;
 

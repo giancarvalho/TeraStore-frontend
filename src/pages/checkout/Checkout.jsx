@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import PageContainer from '../../components/containers/PageContainer';
+import Loader from 'react-loader-spinner';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
 import ContentContainer from '../../components/containers/ContentContainer';
@@ -14,7 +15,7 @@ import UserContext from '../../contexts/UserContext';
 import { toast } from 'react-toastify';
 
 export default function Checkout() {
-  const [chosenItems, setChosenItems] = useState([]);
+  const [chosenItems, setChosenItems] = useState(null);
   const [total, setTotal] = useState(0);
   const { cart } = useContext(CartContext);
   const history = useHistory();
@@ -65,7 +66,9 @@ export default function Checkout() {
           setChosenItems(productsData);
         })
         .catch((error) => console.log(error.response));
+      return;
     }
+    setChosenItems([]);
   }, [cart]);
 
   return (
@@ -81,23 +84,30 @@ export default function Checkout() {
               <TableColumn>Total</TableColumn>
             </HeadRow>
           </thead>
-          <tbody>
-            {chosenItems.length ? (
-              chosenItems.map((product) => (
-                <Item
-                  product={product}
-                  setChosenItems={setChosenItems}
-                  calculateTotal={calculateTotal}
-                  chosenItems={chosenItems}
-                  key={product.id}
-                />
-              ))
-            ) : (
-              <MessageContainer>
-                <td>Oops, your cart is empty</td>
-              </MessageContainer>
-            )}
-          </tbody>
+
+          {!chosenItems ? (
+            <LoaderContainer>
+              <Loader type="ThreeDots" color="#b3b3b3" height={40} width={40} />
+            </LoaderContainer>
+          ) : (
+            <tbody>
+              {cart.length ? (
+                chosenItems.map((product) => (
+                  <Item
+                    product={product}
+                    setChosenItems={setChosenItems}
+                    calculateTotal={calculateTotal}
+                    chosenItems={chosenItems}
+                    key={product.id}
+                  />
+                ))
+              ) : (
+                <MessageContainer>
+                  <td>Oops, your cart is empty</td>
+                </MessageContainer>
+              )}
+            </tbody>
+          )}
           <tfoot>
             <FooterRow>
               <Total>
@@ -210,6 +220,12 @@ const Total = styled.td`
     font-weight: 700;
     color: #76b900;
   }
+`;
+
+const LoaderContainer = styled.th`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ButtonContainer = styled.div`
