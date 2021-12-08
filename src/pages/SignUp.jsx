@@ -35,12 +35,12 @@ export default function SignUp() {
 
     setDisabled(true);
     createUser(form)
-      .then(() => history.push('/sign-in'))
+      .then(() => history.push('/sign-in?registered=true'))
       .catch((error) => {
         if (error.response.status === 409)
-          toast('This user is already registered');
+          toast.error('This user is already registered');
         else
-          toast(
+          toast.error(
             "Ops, we can't reach our server at the moment. Check your connection and reload the page."
           );
 

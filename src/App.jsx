@@ -77,8 +77,8 @@ function App() {
       </Switch>
       <ToastContainer
         theme="dark"
-        position={isMobile ? 'bottom-center' : 'bottom-right'}
-        autoClose={3000}
+        position={isMobile ? 'bottom-center' : 'top-center'}
+        autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
