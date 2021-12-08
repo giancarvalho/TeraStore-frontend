@@ -9,7 +9,7 @@ import { getLastProducts } from '../services/services';
 import gpu from '../assets/images/gpu.jpg';
 
 export default function Home() {
-  const [productsList, setProductsList] = useState([]);
+  const [productsList, setProductsList] = useState(null);
 
   useEffect(() => {
     getLastProducts().then((response) => setProductsList(response.data));

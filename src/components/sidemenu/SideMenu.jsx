@@ -4,7 +4,7 @@ import { getCategoriesList } from '../../services/services';
 import Menu from './elements/Menu';
 
 export default function SideMenu({ setOpenSideMenu }) {
-  const [categoriesList, setCategoriesList] = useState([]);
+  const [categoriesList, setCategoriesList] = useState(null);
 
   useEffect(() => {
     getCategoriesList().then((response) => setCategoriesList(response.data));
