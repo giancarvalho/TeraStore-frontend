@@ -9,6 +9,7 @@ import { getFormDetails, sendOrder } from '../../../services/services';
 import { saveCartToStorage } from '../../../utils/cart/cart';
 import addressSchema from '../../../validation/addressSchema';
 import { toast } from 'react-toastify';
+import StatesDropDown from './statesDropDown';
 
 export default function CheckoutForm({ chosenItems }) {
   const [states, setStates] = useState([]);
@@ -89,7 +90,7 @@ export default function CheckoutForm({ chosenItems }) {
               <StyledInput
                 width="10%"
                 type="number"
-                placeholder="No"
+                placeholder="Number"
                 value={address.number}
                 onChange={(e) =>
                   setAddress({ ...address, number: e.target.value })
@@ -99,7 +100,7 @@ export default function CheckoutForm({ chosenItems }) {
               <StyledInput
                 width="40%"
                 type="text"
-                placeholder="Complement"
+                placeholder="Address line 2"
                 value={address.complement}
                 onChange={(e) =>
                   setAddress({ ...address, complement: e.target.value })
@@ -119,7 +120,7 @@ export default function CheckoutForm({ chosenItems }) {
               <StyledInput
                 width="25%"
                 type="text"
-                placeholder="Neighborhood"
+                placeholder="District"
                 value={address.neighborhood}
                 onChange={(e) =>
                   setAddress({ ...address, neighborhood: e.target.value })
@@ -137,20 +138,13 @@ export default function CheckoutForm({ chosenItems }) {
                 required
               />
 
-              <Select
+              <StatesDropDown
                 id="states"
+                list={states}
                 value={address.stateId}
-                onChange={(e) =>
-                  setAddress({ ...address, stateId: e.target.value })
-                }
-              >
-                <option value={undefined}>State</option>
-                {states.map((state) => (
-                  <option value={state.id} key={state.id}>
-                    {state.name}
-                  </option>
-                ))}
-              </Select>
+                setData={setAddress}
+                data={address}
+              />
             </div>
 
             <Select

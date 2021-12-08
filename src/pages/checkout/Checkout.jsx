@@ -50,10 +50,10 @@ export default function Checkout() {
   }
 
   useEffect(() => {
-    if (!user.token) {
+    if (!user.token || cart.length === 0) {
       setShowForm(false);
     }
-  }, [user]);
+  }, [user, cart]);
 
   useEffect(() => {
     if (cart.length > 0) {
