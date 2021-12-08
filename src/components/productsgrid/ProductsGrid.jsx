@@ -1,17 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
 import ProductCard from './elements/ProductCard';
+import Loader from 'react-loader-spinner';
+import LoaderContainer from '../containers/LoaderContainer';
 
 export default function ProductsGrid({ productsList, name }) {
   // pass an array with products
   return (
     <GridContainer>
       <h1>{name}</h1>
-      <ProductsContainer>
-        {productsList.map((product) => (
-          <ProductCard key={product.id} productData={product} />
-        ))}
-      </ProductsContainer>
+      {!productsList ? (
+        <LoaderContainer>
+          <Loader type="TailSpin" color="#e9e9e9" height={80} width={80} />
+        </LoaderContainer>
+      ) : (
+        <ProductsContainer>
+          {productsList.map((product) => (
+            <ProductCard key={product.id} productData={product} />
+          ))}
+        </ProductsContainer>
+      )}
     </GridContainer>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 import StyledButton from '../../../components/buttons/StyledButton';
 import CartContext from '../../../contexts/CartContext';
@@ -8,6 +9,7 @@ import { getFormDetails, sendOrder } from '../../../services/services';
 import { saveCartToStorage } from '../../../utils/cart/cart';
 import addressSchema from '../../../validation/addressSchema';
 import { toast } from 'react-toastify';
+import StatesDropDown from './statesDropDown';
 
 export default function CheckoutForm({ chosenItems }) {
   const [states, setStates] = useState([]);
@@ -36,7 +38,7 @@ export default function CheckoutForm({ chosenItems }) {
   }, []);
 
   function alertProblem(message) {
-    toast(message);
+    toast.error(message);
     setIsButtonDisabled(false);
   }
 
@@ -88,7 +90,7 @@ export default function CheckoutForm({ chosenItems }) {
               <StyledInput
                 width="10%"
                 type="number"
-                placeholder="No"
+                placeholder="Number"
                 value={address.number}
                 onChange={(e) =>
                   setAddress({ ...address, number: e.target.value })
@@ -98,7 +100,7 @@ export default function CheckoutForm({ chosenItems }) {
               <StyledInput
                 width="40%"
                 type="text"
-                placeholder="Complement"
+                placeholder="Address line 2 (optional)"
                 value={address.complement}
                 onChange={(e) =>
                   setAddress({ ...address, complement: e.target.value })
@@ -107,7 +109,7 @@ export default function CheckoutForm({ chosenItems }) {
               <StyledInput
                 width="20%"
                 type="text"
-                maxLength="9"
+                maxLength="8"
                 placeholder="Zipcode"
                 value={address.zipcode}
                 onChange={(e) =>
@@ -118,7 +120,7 @@ export default function CheckoutForm({ chosenItems }) {
               <StyledInput
                 width="25%"
                 type="text"
-                placeholder="Neighborhood"
+                placeholder="District"
                 value={address.neighborhood}
                 onChange={(e) =>
                   setAddress({ ...address, neighborhood: e.target.value })
@@ -136,20 +138,13 @@ export default function CheckoutForm({ chosenItems }) {
                 required
               />
 
-              <Select
+              <StatesDropDown
                 id="states"
+                list={states}
                 value={address.stateId}
-                onChange={(e) =>
-                  setAddress({ ...address, stateId: e.target.value })
-                }
-              >
-                <option value={undefined}>State</option>
-                {states.map((state) => (
-                  <option value={state.id} key={state.id}>
-                    {state.name}
-                  </option>
-                ))}
-              </Select>
+                setData={setAddress}
+                data={address}
+              />
             </div>
 
             <Select
@@ -167,7 +162,11 @@ export default function CheckoutForm({ chosenItems }) {
           </InputsBox>
 
           <ConfirmButton type="submit" isButtonDisabled={isButtonDisabled}>
-            Confirm Order
+            {isButtonDisabled ? (
+              <Loader type="ThreeDots" color="#ffffff" height={40} width={40} />
+            ) : (
+              'Confirm Order'
+            )}
           </ConfirmButton>
         </fieldset>
       </form>
@@ -202,6 +201,9 @@ const Wrapper = styled.div`
 `;
 
 const ConfirmButton = styled(StyledButton)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #0079ca;
 `;
 

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { AiOutlineClose } from 'react-icons/ai';
 import ActionButton from '../../buttons/ActionButton';
 import TeraStore from '../../logo/Logo';
+import Loader from 'react-loader-spinner';
 
 function Menu({ setOpenSideMenu, categoriesList }) {
   Menu.handleClickOutside = () => setOpenSideMenu(false);
@@ -16,17 +17,23 @@ function Menu({ setOpenSideMenu, categoriesList }) {
           <AiOutlineClose />
         </CloseMenu>
       </MenuHeaderContainer>
-      <CategoriesContainer>
-        {categoriesList.map((category) => (
-          <Link
-            to={`/category/${category.id}`}
-            key={category.id}
-            onClick={() => setOpenSideMenu(false)}
-          >
-            <Category>{category.name}</Category>
-          </Link>
-        ))}
-      </CategoriesContainer>
+      {categoriesList ? (
+        <CategoriesContainer>
+          {categoriesList.map((category) => (
+            <Link
+              to={`/category/${category.id}`}
+              key={category.id}
+              onClick={() => setOpenSideMenu(false)}
+            >
+              <Category>{category.name}</Category>
+            </Link>
+          ))}{' '}
+        </CategoriesContainer>
+      ) : (
+        <LoaderContainer>
+          <Loader type="ThreeDots" color="#fdfdfd" height={60} width={60} />
+        </LoaderContainer>
+      )}
     </MenuContainer>
   );
 }
@@ -56,6 +63,13 @@ const MenuHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const LoaderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
 `;
 
 const CategoriesContainer = styled.ul`

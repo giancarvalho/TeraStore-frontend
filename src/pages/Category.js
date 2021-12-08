@@ -7,6 +7,8 @@ import ProductsGrid from '../components/productsgrid/ProductsGrid';
 import { getCategoryProducts } from '../services/services';
 import { useParams } from 'react-router';
 import styled from 'styled-components';
+import Loader from 'react-loader-spinner';
+import LoaderContainer from '../components/containers/LoaderContainer';
 
 export default function Category() {
   const [categoryData, setCategoryData] = useState(null);
@@ -22,11 +24,15 @@ export default function Category() {
     <PageContainer>
       <Header />
       <Container>
-        {categoryData && (
+        {categoryData ? (
           <ProductsGrid
             productsList={categoryData.products}
             name={categoryData.name}
           />
+        ) : (
+          <LoaderContainer>
+            <Loader type="TailSpin" color="#e9e9e9" height={80} width={80} />
+          </LoaderContainer>
         )}
       </Container>
       <Footer />
