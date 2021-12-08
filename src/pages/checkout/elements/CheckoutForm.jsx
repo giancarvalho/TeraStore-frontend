@@ -100,7 +100,7 @@ export default function CheckoutForm({ chosenItems }) {
               <StyledInput
                 width="40%"
                 type="text"
-                placeholder="Address line 2"
+                placeholder="Address line 2 (optional)"
                 value={address.complement}
                 onChange={(e) =>
                   setAddress({ ...address, complement: e.target.value })
@@ -109,7 +109,7 @@ export default function CheckoutForm({ chosenItems }) {
               <StyledInput
                 width="20%"
                 type="text"
-                maxLength="9"
+                maxLength="8"
                 placeholder="Zipcode"
                 value={address.zipcode}
                 onChange={(e) =>

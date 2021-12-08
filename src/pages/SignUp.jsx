@@ -76,7 +76,7 @@ export default function SignUp() {
               required
             />
             <Input
-              placeholder="CPF"
+              placeholder="CPF (Ex: 11122233344)"
               value={form.cpf}
               onChange={(e) => setForm({ ...form, cpf: e.target.value })}
               required
