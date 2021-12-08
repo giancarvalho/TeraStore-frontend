@@ -10,8 +10,9 @@ import Input from '../components/input/Input';
 import styled from 'styled-components';
 import Header from '../components/header/Header';
 import { authenticateUser } from '../services/services';
+import { toast } from 'react-toastify';
 
-export default function SignIn({ sendAlert }) {
+export default function SignIn() {
   const [disabled, setDisabled] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,11 +33,9 @@ export default function SignIn({ sendAlert }) {
     }
 
     if (isRegistered) {
-      sendAlert({
-        message: 'Success! Sign in and start using your wallet.',
-      });
+      toast.success('Success! Now sign in to your account.');
     }
-  }, [storedUser, history, isRegistered, sendAlert, setUser]);
+  }, [storedUser, history, isRegistered, setUser]);
 
   function getStoredUser() {
     return JSON.parse(localStorage.getItem('user'));
@@ -56,12 +55,11 @@ export default function SignIn({ sendAlert }) {
         history.push('/');
       })
       .catch((error) => {
-        sendAlert({
-          message: error.response
+        toast.error(
+          error.response
             ? error.response?.data
-            : 'Our server is out of reach at the moment.',
-          error: true,
-        });
+            : 'Our server is out of reach at the moment.'
+        );
 
         setDisabled(false);
       });

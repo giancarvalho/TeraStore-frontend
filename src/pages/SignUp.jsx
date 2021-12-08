@@ -10,8 +10,9 @@ import styled from 'styled-components';
 import Header from '../components/header/Header';
 import { createUser } from '../services/services';
 import userSchema from '../validation/newUserSchema';
+import { toast } from 'react-toastify';
 
-export default function SignUp({ sendAlert }) {
+export default function SignUp() {
   const [disabled, setDisabled] = useState(false);
   const [form, setForm] = useState({
     email: '',
@@ -27,22 +28,19 @@ export default function SignUp({ sendAlert }) {
     const validation = userSchema.validate(form);
 
     if (validation.error) {
-      sendAlert({
-        message: validation.error.details[0].message,
-        error: true,
-      });
+      toast.error(validation.error.details[0].message);
       setDisabled(false);
       return;
     }
 
     setDisabled(true);
     createUser(form)
-      .then(() => history.push('/sign-in'))
+      .then(() => history.push('/sign-in?registered=true'))
       .catch((error) => {
         if (error.response.status === 409)
-          sendAlert('This user is already registered');
+          toast.error('This user is already registered');
         else
-          sendAlert(
+          toast.error(
             "Ops, we can't reach our server at the moment. Check your connection and reload the page."
           );
 

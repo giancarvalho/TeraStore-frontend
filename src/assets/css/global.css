@@ -8,6 +8,11 @@ body,
   box-sizing: border-box;
 }
 
+.Toastify__toast {
+  --toastify-icon-color-success: var(#76b900);
+  --toastify-color-progress-success: var(#76b900);
+}
+
 /* transitions */
 
 .alert-enter {
@@ -30,4 +35,12 @@ body,
 
 .delete-enter {
   width: 0px;
+}
+
+/* mobile  */
+
+@media (max-width: 600px) {
+  .Toastify__toast {
+    bottom: 150px;
+  }
 }

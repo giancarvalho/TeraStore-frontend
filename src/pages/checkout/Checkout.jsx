@@ -11,8 +11,9 @@ import StyledButton from '../../components/buttons/StyledButton';
 import { useHistory } from 'react-router';
 import CheckoutForm from './elements/CheckoutForm';
 import UserContext from '../../contexts/UserContext';
+import { toast } from 'react-toastify';
 
-export default function Checkout({ sendAlert }) {
+export default function Checkout() {
   const [chosenItems, setChosenItems] = useState([]);
   const [total, setTotal] = useState(0);
   const { cart } = useContext(CartContext);
@@ -22,10 +23,7 @@ export default function Checkout({ sendAlert }) {
 
   function redirectOrProceed() {
     if (cart.length < 1)
-      return sendAlert({
-        error: true,
-        message: "You don't have any items to checkout",
-      });
+      return toast.info("You don't have any items to checkout");
 
     if (user.token) {
       setShowForm(true);
@@ -49,6 +47,12 @@ export default function Checkout({ sendAlert }) {
       )
     );
   }
+
+  useEffect(() => {
+    if (!user.token) {
+      setShowForm(false);
+    }
+  }, [user]);
 
   useEffect(() => {
     if (cart.length > 0) {
@@ -110,9 +114,7 @@ export default function Checkout({ sendAlert }) {
             </StyledButton>
           )}
         </ButtonContainer>
-        {showForm && (
-          <CheckoutForm chosenItems={chosenItems} sendAlert={sendAlert} />
-        )}
+        {showForm && <CheckoutForm chosenItems={chosenItems} />}
       </ContentContainer>
       <Footer />
     </PageContainer>

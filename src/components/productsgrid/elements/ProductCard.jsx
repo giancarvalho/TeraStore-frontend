@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import CartContext from '../../../contexts/CartContext';
 import { calcNumItemsInCart } from '../../../utils/cart/cart';
+import { toast } from 'react-toastify';
 
 import {
   ProductContainer,
@@ -30,6 +31,11 @@ export default function ProductCard({ productData }) {
   }, [cart]);
 
   function addItem() {
+    if (nItemsInCart + 1 > productData.stock) {
+      toast.warn(`You reached the limit for this item.`);
+      return;
+    }
+
     addToCart(productData.id);
     setIsAddBtnClicked(true);
     setnItemsInCart(() => nItemsInCart + 1);
@@ -42,7 +48,7 @@ export default function ProductCard({ productData }) {
 
   return (
     <ProductContainer>
-      <img src={productData.image} alt="cooler" />
+      <img src={productData.image} alt={productData.name} />
       <DetailsContainer>
         <Title>{productData.name}</Title>
         <Price>

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import './assets/css/reset.css';
 import './assets/css/global.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -12,21 +12,17 @@ import {
 import Checkout from './pages/checkout/Checkout';
 import ScrollToTop from './hooks/ScrollToTop';
 import SuccessPage from './pages/SuccessPage';
-import Alert from './components/alert/Alert';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import UserContext from './contexts/UserContext';
 import Category from './pages/Category';
+import { ToastContainer, Slide } from 'react-toastify';
 
 function App() {
   const [user, setUser] = useState({ token: null, name: '' });
   const storedCart = getCartFromStorage();
   const [cart, setCart] = useState(storedCart);
-  const [alert, setAlert] = useState({
-    status: false,
-    message: '',
-    error: false,
-  });
+  const [isMobile] = useState(window.innerWidth < 600);
 
   function saveNewList(newCartList) {
     saveCartToStorage(newCartList);
@@ -43,10 +39,6 @@ function App() {
     saveNewList(newCartList);
   }
 
-  const sendAlert = useCallback((details) => {
-    setAlert({ status: true, ...details });
-  }, []);
-
   return (
     <Router>
       <ScrollToTop />
@@ -61,10 +53,10 @@ function App() {
             }}
           >
             <Route path="/sign-up" exact>
-              <SignUp sendAlert={sendAlert} />
+              <SignUp />
             </Route>
             <Route path="/sign-in" exact>
-              <SignIn sendAlert={sendAlert} />
+              <SignIn />
             </Route>
             <Route path="/" exact>
               <Home />
@@ -74,7 +66,7 @@ function App() {
               <Category />
             </Route>
             <Route path="/checkout" exact>
-              <Checkout sendAlert={sendAlert} />
+              <Checkout />
             </Route>
 
             <Route path="/success/:id" exact>
@@ -83,7 +75,19 @@ function App() {
           </CartContext.Provider>
         </UserContext.Provider>
       </Switch>
-      <Alert alert={alert} setAlert={setAlert} />
+      <ToastContainer
+        theme="dark"
+        position={isMobile ? 'bottom-center' : 'top-center'}
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        transition={Slide}
+      />
     </Router>
   );
 }
