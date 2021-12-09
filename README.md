@@ -3,7 +3,7 @@
 
 TeraStore is a fictional brazilian ecommerce where you can find the best deals for computers, keyboards, printers and other tech products. 
 
-The project was made using React and Express/Nodejs and includes api calls, authentication, stock control and more. 
+The project was made using React and Express/Nodejs. The frontend includes api calls, authentication, responsive design and more. 
 
 ### See the project live [here](https://tera-store-frontend-ten.vercel.app).
 
