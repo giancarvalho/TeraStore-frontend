@@ -17,7 +17,7 @@ function StatesDropDown({ list, setData, data }) {
   return (
     <StateContainer onClick={() => setIsClicked(!isClicked)}>
       <div>
-        {chosenOption || 'State'} <ArrowDown className="icon" />
+        {chosenOption || <span>State</span>} <ArrowDown className="icon" />
       </div>
       {isClicked && (
         <StateOptionsContainer>
@@ -52,10 +52,10 @@ const StateContainer = styled.div`
   justify-content: center;
   position: relative;
   div {
-    padding: 10px 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
   }
 
   @media (max-width: 600px) {
@@ -88,7 +88,15 @@ const StateOptionsContainer = styled.ul`
   padding: 5px;
   overflow-y: scroll;
   li {
-    margin-bottom: 7px;
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+    :hover {
+      background-color: #6d6d6d;
+    }
   }
 
   @media (max-width: 600px) {
