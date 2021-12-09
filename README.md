@@ -1,70 +1,37 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## TeraStore
 
-## Available Scripts
+TeraStore is a fictional brazilian ecommerce where you can find the best deals for computers, keyboards, printers and other tech products. 
 
-In the project directory, you can run:
+The project was made using React and Express/Nodejs and includes api calls, authentication, stock control and more. 
 
-### `npm start`
+### See the project live [here](https://tera-store-frontend-ten.vercel.app).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![HomeDesktop](https://i.imgur.com/OwnJQHO.png)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<p align="center">
+  <img src="https://i.imgur.com/sC3C5AY.png" />
+</p>
 
-### `npm test`
+This is a full stack project. You are in the frontend repository, you can see the [backend here](https://github.com/giancarvalho/TeraStore-backend)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Main technologies - frontend
 
-### `npm run build`
+- React
+- React Router
+- Styled Components
+- CSS Transition Group
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Running locally
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+First, make sure you have the [backend](https://github.com/giancarvalho/TeraStore-backend) running.  Then, follow the steps:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1)  Run ```git clone https://github.com/giancarvalho/TeraStore-frontend.git ```
+2) Run ```npm install```
+3) If needed, replace the api URL in [ src\services\URL.js](https://github.com/giancarvalho/TeraStore-frontend/blob/b4fdd3a115c72b215e384cf0b7d78601e92f774e/src/services/URL.js)
+4) Run ```npm start```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+This is the 16th project of Driven's Full-stack Web Dev Course. 
