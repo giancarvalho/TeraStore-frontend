@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+
 import Header from '../components/header/Header';
 import PageContainer from '../components/containers/PageContainer';
 import Footer from '../components/footer/Footer';
 import ContentContainer from '../components/containers/ContentContainer';
 import ProductsGrid from '../components/productsgrid/ProductsGrid';
 import { getLastProducts } from '../services/services';
-import gpu from '../assets/images/gpu.jpg';
+import corsair from '../assets/images/corsair.webp';
+import monitor from '../assets/images/monitor.png';
+import geforce from '../assets/images/geforce.jpg';
+import Banner from '../components/banners/Banner';
 
 export default function Home() {
   const [productsList, setProductsList] = useState(null);
@@ -19,32 +22,11 @@ export default function Home() {
     <PageContainer>
       <Header />
       <ContentContainer>
-        <BannerContainer>
-          <Banner src={gpu} alt="gpu" />
-        </BannerContainer>
+        <Banner imageList={[monitor, corsair, geforce]} />
+
         <ProductsGrid productsList={productsList} name="New Releases" />
       </ContentContainer>
       <Footer />
     </PageContainer>
   );
 }
-
-const BannerContainer = styled.div`
-  width: 100%;
-  height: 250px;
-  margin-bottom: 50px;
-
-  @media (max-width: 600px) {
-    height: 120px;
-  }
-`;
-
-const Banner = styled.img`
-  width: 100%;
-  height: 250px;
-  object-fit: fill;
-
-  @media (max-width: 600px) {
-    height: 120px;
-  }
-`;
