@@ -17,6 +17,7 @@ import SignUp from './pages/SignUp';
 import UserContext from './contexts/UserContext';
 import Category from './pages/Category';
 import { ToastContainer, Slide } from 'react-toastify';
+import ProductPage from './pages/ProductPage/ProductPage';
 
 function App() {
   const [user, setUser] = useState({ token: null, name: '' });
@@ -61,9 +62,11 @@ function App() {
             <Route path="/" exact>
               <Home />
             </Route>
-
             <Route path="/category/:categoryId" exact>
               <Category />
+            </Route>
+            <Route path="/category/:categoryId/product/:productId" exact>
+              <ProductPage />
             </Route>
             <Route path="/checkout" exact>
               <Checkout />
