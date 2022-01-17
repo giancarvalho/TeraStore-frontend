@@ -6,11 +6,12 @@ import Footer from '../../components/footer/Footer';
 import { useParams } from 'react-router-dom';
 import { getCategoryProducts } from '../../services/services';
 import ChoseProduct from './elements/ChosenProduct';
+import DefaultLoader from '../../components/others/DefaultLoader';
 
 export default function ProductPage() {
   const { categoryId, productId } = useParams();
-  const [product, setProduct] = useState({});
-  const [category, setCategory] = useState({});
+  const [product, setProduct] = useState(null);
+  const [category, setCategory] = useState(null);
 
   useEffect(() => {
     getCategoryProducts(categoryId).then((response) => {
@@ -20,12 +21,11 @@ export default function ProductPage() {
     });
   }, [categoryId, productId]);
 
-  console.log(product);
   return (
     <PageContainer>
       <Header />
       <ContentContainer>
-        <ChoseProduct product={product} />
+        {product ? <ChoseProduct product={product} /> : <DefaultLoader />}
       </ContentContainer>
       <Footer />
     </PageContainer>

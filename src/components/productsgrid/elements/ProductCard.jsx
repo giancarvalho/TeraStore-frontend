@@ -46,7 +46,6 @@ export default function ProductCard({ productData }) {
     addToCart(productData.id);
     history.push('/checkout');
   }
-  console.log(productData);
 
   return (
     <ProductContainer>

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import StyledButton from '../../../components/buttons/StyledButton';
 
 export default function ChosenProduct({ product }) {
-  console.log(product);
   return (
     <ProductContainer>
       <InnerWrapper>
@@ -33,8 +32,8 @@ export default function ChosenProduct({ product }) {
           </StockInfoContainer>
 
           <ButtonContainer>
-            <StyledButton color="#0087d4">Add to cart</StyledButton>
             <StyledButton>Buy</StyledButton>
+            <StyledButton color="#0087d4">Add to cart</StyledButton>
           </ButtonContainer>
         </ProductDetailsContainer>
       </InnerWrapper>
