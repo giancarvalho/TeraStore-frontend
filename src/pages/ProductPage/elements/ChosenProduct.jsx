@@ -84,8 +84,7 @@ export default function ChosenProduct({ product }) {
 const ProductContainer = styled.div`
   width: 100%;
   min-height: 500px;
-
-  padding-top: 50px;
+  padding: 50px 0;
 `;
 
 const InnerWrapper = styled.div`
@@ -96,7 +95,7 @@ const InnerWrapper = styled.div`
   min-height: 200px;
   margin: 0 auto;
 
-  @media (max-width: 600px) {
+  @media (max-width: 700px) {
     flex-direction: column;
   }
 `;
@@ -110,6 +109,16 @@ const ImageContainer = styled.div`
     max-width: 500px;
     border-radius: 4px;
     background-color: #fff;
+  }
+
+  @media (max-width: 700px) {
+    justify-content: center;
+    width: 100%;
+    height: 350px;
+
+    img {
+      width: 100%;
+    }
   }
 `;
 
@@ -126,6 +135,15 @@ const ProductDetailsContainer = styled.div`
     margin-top: 15px;
     text-align: justify;
   }
+
+  @media (max-width: 700px) {
+    gap: 15px;
+    justify-content: flex-start;
+
+    p {
+      font-size: 14px;
+    }
+  }
 `;
 
 const Name = styled.h1`
@@ -133,6 +151,10 @@ const Name = styled.h1`
   font-size: 58px;
   font-weight: bold;
   text-transform: capitalize;
+
+  @media (max-width: 700px) {
+    font-size: 2.5rem;
+  }
 `;
 
 const Price = styled.h2`
@@ -140,6 +162,11 @@ const Price = styled.h2`
   font-weight: bold;
   color: #76b900;
   margin-top: 25px;
+
+  @media (max-width: 700px) {
+    margin-top: 15px;
+    font-size: 2.3rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -152,6 +179,7 @@ const ButtonContainer = styled.div`
 const StockInfoContainer = styled.div`
   display: flex;
   align-items: center;
+  margin: 0 auto;
 `;
 
 const Stock = styled.span`
