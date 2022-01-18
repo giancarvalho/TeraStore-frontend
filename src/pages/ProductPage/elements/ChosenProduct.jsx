@@ -1,8 +1,45 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import StyledButton from '../../../components/buttons/StyledButton';
+import CartContext from '../../../contexts/CartContext';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
+import { BsCartCheck } from 'react-icons/bs';
 
 export default function ChosenProduct({ product }) {
+  const [isAddBtnClicked, setIsAddButtonClicked] = useState(false);
+  const { addToCart, cart } = useContext(CartContext);
+  const chosenProductInCart = cart.filter((item) => item.id === product.id);
+  const [nItemsInCart, setnItemsInCart] = useState(chosenProductInCart.length);
+  const history = useHistory();
+
+  function addItem() {
+    if (nItemsInCart + 1 > product.stock) {
+      toast.warn(`You reached the limit for this item.`);
+      return;
+    }
+
+    addToCart(product.id);
+    setnItemsInCart(() => nItemsInCart + 1);
+    triggerAddButton();
+  }
+
+  function triggerAddButton() {
+    setIsAddButtonClicked(true);
+    setTimeout(() => setIsAddButtonClicked(false), 3500);
+  }
+
+  function buyItem() {
+    if (nItemsInCart + 1 > product.stock) {
+      toast.warn(`You reached the limit for this item.`);
+      history.push('/checkout');
+      return;
+    }
+
+    addToCart(product.id);
+    history.push('/checkout');
+  }
+
   return (
     <ProductContainer>
       <InnerWrapper>
@@ -11,7 +48,7 @@ export default function ChosenProduct({ product }) {
         </ImageContainer>
         <ProductDetailsContainer>
           <div>
-            <h1>{product.name}</h1>
+            <Name>{product.name}</Name>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -25,15 +62,18 @@ export default function ChosenProduct({ product }) {
           <StockInfoContainer>
             <Price>R$ {product.price}</Price>
             <Stock lowStock={product.stock <= 5}>
-              {product.stock > 5
-                ? 'In stock'
-                : `Only ${product.stock} available!`}
+              {product.stock > 5 ? 'In stock' : `Only ${product.stock} left!`}
             </Stock>
           </StockInfoContainer>
 
           <ButtonContainer>
-            <StyledButton>Buy</StyledButton>
-            <StyledButton color="#0087d4">Add to cart</StyledButton>
+            <StyledButton onClick={() => buyItem()}>Buy</StyledButton>
+            <AddButton onClick={() => addItem()}>
+              <AddedBtnText isClicked={isAddBtnClicked}>
+                Added <CheckIcon />
+              </AddedBtnText>
+              <AddBtnText isClicked={isAddBtnClicked}>Add to cart</AddBtnText>
+            </AddButton>
           </ButtonContainer>
         </ProductDetailsContainer>
       </InnerWrapper>
@@ -81,17 +121,18 @@ const ProductDetailsContainer = styled.div`
   justify-content: space-around;
   gap: 15px;
 
-  h1 {
-    display: inline-block;
-    font-size: 58px;
-    font-weight: bold;
-  }
-
   p {
     display: inline-block;
     margin-top: 15px;
     text-align: justify;
   }
+`;
+
+const Name = styled.h1`
+  display: inline-block;
+  font-size: 58px;
+  font-weight: bold;
+  text-transform: capitalize;
 `;
 
 const Price = styled.h2`
@@ -116,4 +157,30 @@ const StockInfoContainer = styled.div`
 const Stock = styled.span`
   margin-left: 15px;
   color: ${({ lowStock }) => (lowStock ? '#fcff55' : '#9cfd7f')};
+`;
+
+const AddButton = styled(StyledButton)`
+  background-color: #0087d4;
+  position: relative;
+`;
+const AddBtnText = styled.span`
+  display: ${({ isClicked }) => (isClicked ? 'none' : 'initial')};
+`;
+
+const AddedBtnText = styled.span`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: ${({ isClicked }) => (isClicked ? '1' : '0')};
+  visibility: ${({ isClicked }) => (isClicked ? '1' : 'hidden')};
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 200ms ease-in;
+`;
+
+const CheckIcon = styled(BsCartCheck)`
+  margin-left: 10px;
 `;
