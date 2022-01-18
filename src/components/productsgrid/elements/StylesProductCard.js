@@ -35,6 +35,7 @@ const Title = styled.h2`
   text-transform: capitalize;
   margin-bottom: 5px;
   line-height: 22px;
+  text-align: center;
 `;
 
 const Price = styled.p`
