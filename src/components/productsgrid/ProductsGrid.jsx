@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ProductCard from './elements/ProductCard';
-import Loader from 'react-loader-spinner';
-import LoaderContainer from '../containers/LoaderContainer';
+import DefaultLoader from '../others/DefaultLoader';
 
 export default function ProductsGrid({ productsList, name }) {
   // pass an array with products
@@ -10,9 +9,7 @@ export default function ProductsGrid({ productsList, name }) {
     <GridContainer>
       <h1>{name}</h1>
       {!productsList ? (
-        <LoaderContainer>
-          <Loader type="TailSpin" color="#e9e9e9" height={80} width={80} />
-        </LoaderContainer>
+        <DefaultLoader />
       ) : (
         <ProductsContainer>
           {productsList.map((product) => (
@@ -34,7 +31,7 @@ const GridContainer = styled.main`
     text-transform: capitalize;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 700px) {
     width: 100%;
 
     h1 {
@@ -45,17 +42,17 @@ const GridContainer = styled.main`
 
 const ProductsContainer = styled.ul`
   display: grid;
-  grid-template-columns: repeat(5, 160px);
+  grid-template-columns: repeat(5, 235px);
   grid-gap: 20px;
   justify-content: space-between;
   margin-bottom: 60px;
 
   @media (max-width: 1300px) {
-    grid-template-columns: repeat(auto-fill, 160px);
+    grid-template-columns: repeat(auto-fill, 235px);
   }
-  @media (max-width: 500px) {
-    grid-template-columns: repeat(auto-fill, 150px);
-    grid-gap: 15px;
+  @media (max-width: 700px) {
     justify-content: center;
+    grid-template-columns: repeat(auto-fill, 175px);
+    grid-gap: 15px;
   }
 `;

@@ -1,19 +1,28 @@
 import styled from 'styled-components';
 
 const ProductContainer = styled.li`
+  width: 235px;
 
   img {
-    height: 150px;
+    height: 240px;
     width: 100%;
     border-radius: 4px 4px 0 0;
     object-fit: cover;
     background-color: #fff;
   }
+
+  @media (max-width: 700px) {
+    width: 175px;
+
+    img {
+      height: 150px;
+    }
+  }
 `;
 
 const DetailsContainer = styled.div`
   display: flex;
-  height: 60px;
+  height: 70px;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -22,14 +31,20 @@ const DetailsContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 14px;
+  font-size: 19px;
   text-transform: capitalize;
   margin-bottom: 5px;
+  line-height: 22px;
+  text-align: center;
 `;
 
 const Price = styled.p`
-  font-size: 16px;
+  font-size: 19px;
   font-weight: 700;
+
+  @media (max-width: 700px) {
+    font-size: 16px;
+  }
 `;
 
 const ButtonsContainer = styled.div`
@@ -37,8 +52,9 @@ const ButtonsContainer = styled.div`
 
   button {
     border: none;
-    height: 26px;
+    height: 36px;
     font-weight: 700;
+
     cursor: pointer;
 
     :hover {
@@ -51,6 +67,11 @@ const BuyButton = styled.button`
   width: 55%;
   background-color: #76b900;
   border-radius: 0 0 0 4px;
+  font-size: 18px;
+
+  @media (max-width: 700px) {
+    font-size: 14px;
+  }
 `;
 
 const CartButton = styled.button`
@@ -59,8 +80,8 @@ const CartButton = styled.button`
   background-size: 200%;
   background-position: ${({ clicked }) => (clicked ? 'right' : 'left')};
   transition: 0.2s ease-out;
+  font-size: 24px;
   border-radius: 0 0 4px 0;
-  font-size: 22px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -81,6 +102,7 @@ const CartButton = styled.button`
   }
 
   p {
+    display: inline-block;
     font-size: 12px;
   }
 `;

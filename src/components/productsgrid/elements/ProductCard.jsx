@@ -6,6 +6,7 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import CartContext from '../../../contexts/CartContext';
 import { calcNumItemsInCart } from '../../../utils/cart/cart';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 import {
   ProductContainer,
@@ -48,14 +49,18 @@ export default function ProductCard({ productData }) {
 
   return (
     <ProductContainer>
-      <img src={productData.image} alt={productData.name} />
-      <DetailsContainer>
-        <Title>{productData.name}</Title>
-        <Price>
-          R$
-          {productData.price}
-        </Price>
-      </DetailsContainer>
+      <Link
+        to={`/category/${productData.category_id}/product/${productData.id}`}
+      >
+        <img src={productData.image} alt={productData.name} />
+        <DetailsContainer>
+          <Title>{productData.name}</Title>
+          <Price>
+            R$
+            {productData.price}
+          </Price>
+        </DetailsContainer>
+      </Link>
       <ButtonsContainer>
         <BuyButton onClick={() => buyItem()}>Buy</BuyButton>
         <CartButton onClick={() => addItem()} clicked={isAddBtnClicked}>
