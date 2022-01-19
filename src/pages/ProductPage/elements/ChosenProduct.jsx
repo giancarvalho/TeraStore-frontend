@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import StyledButton from '../../../components/buttons/StyledButton';
 import CartContext from '../../../contexts/CartContext';
 import { toast } from 'react-toastify';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { BsCartCheck } from 'react-icons/bs';
 
 export default function ChosenProduct({ product }) {
@@ -12,6 +12,11 @@ export default function ChosenProduct({ product }) {
   const chosenProductInCart = cart.filter((item) => item.id === product.id);
   const [nItemsInCart, setnItemsInCart] = useState(chosenProductInCart.length);
   const history = useHistory();
+  const { productId } = useParams();
+
+  useEffect(() => {
+    setIsAddButtonClicked(false);
+  }, [productId]);
 
   function addItem() {
     if (nItemsInCart + 1 > product.stock) {
@@ -53,9 +58,9 @@ export default function ChosenProduct({ product }) {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-              commodo consequat.
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur.
             </p>
           </div>
 
@@ -95,7 +100,7 @@ const InnerWrapper = styled.div`
   min-height: 200px;
   margin: 0 auto;
 
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
     flex-direction: column;
   }
 `;
@@ -111,7 +116,7 @@ const ImageContainer = styled.div`
     background-color: #fff;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
     justify-content: center;
     width: 100%;
     height: 350px;
@@ -123,7 +128,7 @@ const ImageContainer = styled.div`
 `;
 
 const ProductDetailsContainer = styled.div`
-  height: 450px;
+  min-height: 450px;
   max-width: 500px;
   display: flex;
   flex-direction: column;
@@ -134,11 +139,13 @@ const ProductDetailsContainer = styled.div`
     display: inline-block;
     margin-top: 15px;
     text-align: justify;
+    min-height: 100px;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
     gap: 15px;
     justify-content: flex-start;
+    margin: 0 auto;
 
     p {
       font-size: 14px;
@@ -152,7 +159,13 @@ const Name = styled.h1`
   font-weight: bold;
   text-transform: capitalize;
 
-  @media (max-width: 700px) {
+  @media (max-width: 1000px) {
+    font-size: 2.7rem;
+  }
+
+  @media (max-width: 900px) {
+    text-align: center;
+    width: 100%;
     font-size: 2.5rem;
   }
 `;
@@ -163,7 +176,7 @@ const Price = styled.h2`
   color: #76b900;
   margin-top: 25px;
 
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
     margin-top: 15px;
     font-size: 2.3rem;
   }
