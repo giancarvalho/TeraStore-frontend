@@ -90,6 +90,10 @@ const ProductContainer = styled.div`
   width: 100%;
   min-height: 500px;
   padding: 50px 0;
+
+  @media (max-width: 900px) {
+    padding: 50px 0 0 0;
+  }
 `;
 
 const InnerWrapper = styled.div`
@@ -99,6 +103,7 @@ const InnerWrapper = styled.div`
   width: 80%;
   min-height: 200px;
   margin: 0 auto;
+  animation: fadeIn 300ms ease-in-out;
 
   @media (max-width: 900px) {
     flex-direction: column;
@@ -119,7 +124,7 @@ const ImageContainer = styled.div`
   @media (max-width: 900px) {
     justify-content: center;
     width: 100%;
-    height: 350px;
+    height: auto;
 
     img {
       width: 100%;
@@ -143,6 +148,7 @@ const ProductDetailsContainer = styled.div`
   }
 
   @media (max-width: 900px) {
+    min-height: 370px;
     gap: 15px;
     justify-content: flex-start;
     margin: 0 auto;

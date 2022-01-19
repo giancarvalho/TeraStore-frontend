@@ -18,83 +18,9 @@ function ProductCard({ product }) {
   );
 }
 
-// #TODO adicionar efeito de transição entre paginas
-// #TODO adaptação para mobile
-export default function OtherProducts() {
+export default function OtherProducts({ category }) {
   const { categoryId } = useParams();
-  const category = {
-    name: 'Monitors',
-    products: [
-      {
-        id: 8,
-        name: 'Monitor LG 27 IPS',
-        price: '1200.00',
-        category_id: 3,
-        image:
-          'https://www.lg.com/br/images/monitores/md06183578/2_Gallery/DM_01.jpg',
-        stock: 15,
-      },
-      {
-        id: 10,
-        name: 'Monitor LED AOC 21.5',
-        price: '250.00',
-        category_id: 3,
-        image: 'https://i.zst.com.br/thumbs/12/1b/13/19223911.jpg',
-        stock: 15,
-      },
-      {
-        id: 8,
-        name: 'Monitor LG 27 IPS',
-        price: '1200.00',
-        category_id: 3,
-        image:
-          'https://www.lg.com/br/images/monitores/md06183578/2_Gallery/DM_01.jpg',
-        stock: 15,
-      },
-      {
-        id: 10,
-        name: 'Monitor LED AOC 21.5',
-        price: '250.00',
-        category_id: 3,
-        image: 'https://i.zst.com.br/thumbs/12/1b/13/19223911.jpg',
-        stock: 15,
-      },
-      {
-        id: 8,
-        name: 'Monitor LG 27 IPS',
-        price: '1200.00',
-        category_id: 3,
-        image:
-          'https://www.lg.com/br/images/monitores/md06183578/2_Gallery/DM_01.jpg',
-        stock: 15,
-      },
-      {
-        id: 10,
-        name: 'Monitor LED AOC 21.5',
-        price: '250.00',
-        category_id: 3,
-        image: 'https://i.zst.com.br/thumbs/12/1b/13/19223911.jpg',
-        stock: 15,
-      },
-      {
-        id: 8,
-        name: 'Monitor LG 27 IPS',
-        price: '1200.00',
-        category_id: 3,
-        image:
-          'https://www.lg.com/br/images/monitores/md06183578/2_Gallery/DM_01.jpg',
-        stock: 15,
-      },
-      {
-        id: 10,
-        name: 'Monitor LED AOC 21.5',
-        price: '250.00',
-        category_id: 3,
-        image: 'https://i.zst.com.br/thumbs/12/1b/13/19223911.jpg',
-        stock: 15,
-      },
-    ],
-  };
+
   return (
     <GridContainer>
       <h4>
@@ -143,16 +69,6 @@ const GridContainer = styled.div`
     h4 {
       text-align: center;
     }
-  }
-`;
-
-const ProductsList = styled(ScrollMenu)`
-  display: flex;
-  background-color: purple;
-
-  @media (max-width: 530px) {
-    flex-direction: column;
-    align-items: center;
   }
 `;
 

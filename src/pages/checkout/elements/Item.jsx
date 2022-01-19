@@ -8,6 +8,7 @@ import {
   AiOutlineMinusCircle,
 } from 'react-icons/ai';
 import ActionButton from '../../../components/buttons/ActionButton';
+import { Link } from 'react-router-dom';
 
 export default function Item({
   product,
@@ -48,7 +49,9 @@ export default function Item({
         <DeleteButton onClick={() => deleteItem()}>
           <AiFillDelete />
         </DeleteButton>
-        <img src={image} alt={name} />
+        <Link to={`/category/${product.category_id}/product/${product.id}`}>
+          <img src={image} alt={name} />
+        </Link>
         {product.name}
       </Td>
       <Td>

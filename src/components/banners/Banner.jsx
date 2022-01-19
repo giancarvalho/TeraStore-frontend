@@ -48,7 +48,7 @@ const BannerContainer = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  height: 250px;
+  height: 270px;
   object-fit: cover;
   position: absolute;
   top: 0;
