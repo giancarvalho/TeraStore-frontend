@@ -24,6 +24,7 @@ export default function ProductsGrid({ productsList, name }) {
 const GridContainer = styled.main`
   width: 70%;
   margin: 0 auto;
+  animation: fadeIn 300ms linear;
 
   h1 {
     font-size: 28px;

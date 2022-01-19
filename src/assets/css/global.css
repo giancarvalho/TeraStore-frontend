@@ -13,10 +13,34 @@ body,
   --toastify-color-progress-success: var(#76b900);
 }
 
+.react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.react-horizontal-scrolling-menu--scroll-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.react-horizontal-scrolling-menu--wrapper {
+  width: 100%;
+  position: relative;
+}
+
 /* transitions */
 
 .delete-enter {
   width: 0px;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 /* mobile  */
