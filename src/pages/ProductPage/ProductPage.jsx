@@ -35,7 +35,7 @@ export default function ProductPage() {
       <ContentContainer>
         {product ? <ChoseProduct product={product} /> : <DefaultLoader />}
 
-        {/* {category.products.length > 0 && <OtherProducts category={category} />} */}
+        {category.products.length > 0 && <OtherProducts category={category} />}
       </ContentContainer>
       <Footer />
     </PageContainer>
