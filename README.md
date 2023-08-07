@@ -32,6 +32,3 @@ First, make sure you have the [backend](https://github.com/giancarvalho/TeraStor
 2) Run ```npm install```
 3) If needed, replace the api URL in [ src\services\URL.js](https://github.com/giancarvalho/TeraStore-frontend/blob/b4fdd3a115c72b215e384cf0b7d78601e92f774e/src/services/URL.js)
 4) Run ```npm start```
-
----
-This is the 16th project of Driven's Full-stack Web Dev Course. 
